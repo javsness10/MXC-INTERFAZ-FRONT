@@ -1,58 +1,74 @@
 /**
  * registro-bridge.js
- * Intercepta los clics en los actor-tiles del actor-select screen
- * y abre el wizard de registro ANTES de continuar al dashboard/mapa.
+ * Intercepta el clic en tiles de actor → abre el wizard de registro
+ * → luego ejecuta el flujo original de app.js.
  *
- * Requiere que registro-dist/registro.js ya esté cargado en la página
- * y que haya expuesto window.MPC_REGISTRO.open(actorType, onComplete).
+ * FIX: actor-select-screen tiene position:fixed, por lo que offsetParent
+ * siempre es null aunque esté visible. Solo usamos classList para detectarlo.
  */
 (function () {
   'use strict';
 
-  var _skipIntercept = false;
+  var _busy = false;
 
-  /**
-   * Reproduce el comportamiento original del actor-tile click en app.js:
-   * - Guarda el actor en sessionStorage
-   * - Llama al flujo del dashboard
-   */
-  function proceedWithActor(btn) {
-    _skipIntercept = true;
-    // Dispatch un click sintético para que app.js lo maneje normalmente
-    btn.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-    _skipIntercept = false;
+  /* Replica lo que hace initActorSelect() en app.js tras elegir un actor */
+  function proceedWithActor(actor) {
+    /* 1. Guardar en sesión (igual que app.js) */
+    try { sessionStorage.setItem('mpc-actor', actor); } catch (_) {}
+
+    /* 2. Actualizar contexto de rol y CTAs */
+    if (typeof initExplorerRoleContext === 'function') initExplorerRoleContext();
+    if (typeof refreshDetailCtas === 'function') refreshDetailCtas();
+
+    /* 3. Inicializar dashboard y ocultar pantalla de selección */
+    var screen = document.getElementById('actor-select');
+    if (typeof initDashboard === 'function') {
+      initDashboard().then(function () {
+        if (typeof dashShowDashboard === 'function') dashShowDashboard();
+        if (screen) {
+          screen.classList.add('is-hidden');
+          screen.setAttribute('aria-hidden', 'true');
+        }
+      });
+    } else {
+      if (screen) {
+        screen.classList.add('is-hidden');
+        screen.setAttribute('aria-hidden', 'true');
+      }
+      if (typeof tryHideMpcMapLoading === 'function') tryHideMpcMapLoading();
+    }
   }
 
-  /**
-   * Listener en fase de captura — se ejecuta ANTES que app.js (bubbling).
-   */
-  document.addEventListener(
-    'click',
-    function (e) {
-      if (_skipIntercept) return;
+  /* Interceptar clics en actor-tiles en fase de captura (antes que app.js) */
+  document.addEventListener('click', function (e) {
+    if (_busy) return;
 
-      var btn = e.target.closest('[data-actor]');
-      if (!btn) return;
+    var btn = e.target.closest('[data-actor]');
+    if (!btn) return;
 
-      // Solo interceptar si el actor-select screen está visible
-      var screen = document.getElementById('actor-select');
-      if (!screen || screen.classList.contains('is-hidden')) return;
+    /* Solo interceptar cuando actor-select está visible.
+       NOTA: usa solo classList porque position:fixed hace offsetParent = null */
+    var screen = document.getElementById('actor-select');
+    if (!screen || screen.classList.contains('is-hidden')) return;
 
-      // Detener propagación para que app.js NO maneje este clic ahora
-      e.stopImmediatePropagation();
+    /* Bloquear el evento original (no llega a app.js) */
+    e.stopImmediatePropagation();
+    e.preventDefault();
 
-      var actor = btn.dataset.actor;
+    var actor = btn.dataset.actor;
 
-      if (window.MPC_REGISTRO && typeof window.MPC_REGISTRO.open === 'function') {
-        window.MPC_REGISTRO.open(actor, function () {
-          // Callback: cuando el usuario termina o cierra el wizard
-          proceedWithActor(btn);
-        });
-      } else {
-        // Fallback: si el wizard no cargó, continuar flujo normal
-        proceedWithActor(btn);
-      }
-    },
-    true // capture phase
-  );
+    if (window.MPC_REGISTRO && typeof window.MPC_REGISTRO.open === 'function') {
+      window.MPC_REGISTRO.open(actor, function () {
+        /* Después de cerrar el wizard, ejecutar el flujo de app.js */
+        _busy = true;
+        proceedWithActor(actor);
+        _busy = false;
+      });
+    } else {
+      /* Wizard no disponible: ejecutar flujo directamente */
+      proceedWithActor(actor);
+    }
+
+  }, true /* capture */);
+
 })();

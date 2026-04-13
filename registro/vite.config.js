@@ -9,7 +9,7 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/main.jsx'),
       name: 'MpcRegistroApp',
       formats: ['iife'],
-      fileName: () => 'registro'
+      fileName: () => 'registro.js'
     },
     outDir: '../registro-dist',
     emptyOutDir: true,
