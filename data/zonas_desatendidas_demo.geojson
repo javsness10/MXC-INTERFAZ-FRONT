@@ -1,0 +1,13 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-98.5,17.0],[-97.5,17.0],[-97.5,17.8],[-98.5,17.8],[-98.5,17.0]]]},"properties":{"nombre":"Costa Chica, Guerrero","score":0.92,"vulnerabilidad":0.95,"densidad_norm":0.03,"poblacion":185000,"proyectos_activos":1,"area_km2":8500,"riesgo":"Muy Alto","fill_color":"#D84315"}},
+    {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-94.0,17.0],[-93.0,17.0],[-93.0,17.8],[-94.0,17.8],[-94.0,17.0]]]},"properties":{"nombre":"Istmo de Tehuantepec","score":0.85,"vulnerabilidad":0.88,"densidad_norm":0.05,"poblacion":320000,"proyectos_activos":2,"area_km2":12000,"riesgo":"Alto","fill_color":"#E65100"}},
+    {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-92.5,15.5],[-91.5,15.5],[-91.5,16.5],[-92.5,16.5],[-92.5,15.5]]]},"properties":{"nombre":"Sierra Norte de Chiapas","score":0.88,"vulnerabilidad":0.92,"densidad_norm":0.04,"poblacion":145000,"proyectos_activos":1,"area_km2":9200,"riesgo":"Muy Alto","fill_color":"#D84315"}},
+    {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-99.0,16.0],[-98.0,16.0],[-98.0,17.0],[-99.0,17.0],[-99.0,16.0]]]},"properties":{"nombre":"Montaña de Guerrero","score":0.95,"vulnerabilidad":0.98,"densidad_norm":0.02,"poblacion":420000,"proyectos_activos":0,"area_km2":11000,"riesgo":"Crítico","fill_color":"#BF360C"}},
+    {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-97.5,20.0],[-96.5,20.0],[-96.5,21.0],[-97.5,21.0],[-97.5,20.0]]]},"properties":{"nombre":"Sierra Norte de Puebla","score":0.78,"vulnerabilidad":0.82,"densidad_norm":0.08,"poblacion":520000,"proyectos_activos":3,"area_km2":7800,"riesgo":"Alto","fill_color":"#EF6C00"}},
+    {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-105.0,22.0],[-104.0,22.0],[-104.0,23.0],[-105.0,23.0],[-105.0,22.0]]]},"properties":{"nombre":"Sierra del Nayar","score":0.82,"vulnerabilidad":0.85,"densidad_norm":0.06,"poblacion":65000,"proyectos_activos":1,"area_km2":9500,"riesgo":"Alto","fill_color":"#E65100"}},
+    {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-109.0,26.0],[-108.0,26.0],[-108.0,27.0],[-109.0,27.0],[-109.0,26.0]]]},"properties":{"nombre":"Sierra Tarahumara Sur","score":0.87,"vulnerabilidad":0.90,"densidad_norm":0.04,"poblacion":95000,"proyectos_activos":1,"area_km2":15000,"riesgo":"Muy Alto","fill_color":"#D84315"}},
+    {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-98.5,18.0],[-97.5,18.0],[-97.5,19.0],[-98.5,19.0],[-98.5,18.0]]]},"properties":{"nombre":"Mixteca Oaxaqueña","score":0.80,"vulnerabilidad":0.84,"densidad_norm":0.07,"poblacion":280000,"proyectos_activos":2,"area_km2":10500,"riesgo":"Alto","fill_color":"#EF6C00"}}
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "meta": {
+    "generated": "2026-03-23",
+    "version": 2,
+    "description": "Datos extendidos del dashboard MPC Atlas — demo ilustrativa"
+  },
+  "eventos_mxc": [
+    { "id": 1, "nombre": "Semana de Acción 2026", "fecha_inicio": "2026-10-05", "fecha_fin": "2026-10-09", "tipo": "principal" },
+    { "id": 2, "nombre": "Cumbre de Financiamiento Climático", "fecha_inicio": "2026-10-06", "fecha_fin": "2026-10-06", "tipo": "hito" },
+    { "id": 3, "nombre": "Foro Territorial y NbS", "fecha_inicio": "2026-10-07", "fecha_fin": "2026-10-07", "tipo": "hito" },
+    { "id": 4, "nombre": "Plenaria de Cierre MXC", "fecha_inicio": "2026-10-09", "fecha_fin": "2026-10-09", "tipo": "hito" }
+  ],
+  "metas_nacionales": [
+    { "id": "ndc-mx", "nombre": "NDC México 2030", "tipo": "ndc", "target": 22, "current": 7.5, "unidad": "% reducción GEI vs BAU", "color": "#2CB67D" },
+    { "id": "redd-plus", "nombre": "Estrategia REDD+", "tipo": "redd", "target": 1000000, "current": 218000, "unidad": "ha bajo manejo", "color": "#1B7A44" },
+    { "id": "ods-13", "nombre": "ODS 13 · Acción Climática", "tipo": "ods", "target": 100, "current": 41, "unidad": "% meta", "color": "#0E7C86" },
+    { "id": "ods-15", "nombre": "ODS 15 · Vida Terrestre", "tipo": "ods", "target": 100, "current": 29, "unidad": "% meta", "color": "#6A4FC7" },
+    { "id": "mxc-2026", "nombre": "Meta MXC 2026", "tipo": "mxc", "target": 50, "current": 15, "unidad": "proyectos activos", "color": "#F9A826" }
+  ],
+  "actores": [
+    { "id": "a1", "nombre": "WWF México", "tipo_actor": "sociedad-civil", "iac_score": 94.2, "capital_movilizado_usd": 18500000, "co2_mitigado_ton": 750000, "hectareas_impactadas": 125000, "empleos_verdes": 1840, "proyectos": [10], "trend": [78,82,85,88,91,94] },
+    { "id": "a2", "nombre": "CONANP", "tipo_actor": "gobierno", "iac_score": 88.7, "capital_movilizado_usd": 12200000, "co2_mitigado_ton": 280000, "hectareas_impactadas": 59139, "empleos_verdes": 920, "proyectos": [6], "trend": [72,75,80,83,86,89] },
+    { "id": "a3", "nombre": "Agua Capital", "tipo_actor": "sociedad-civil", "iac_score": 82.1, "capital_movilizado_usd": 8700000, "co2_mitigado_ton": 8700, "hectareas_impactadas": 3460, "empleos_verdes": 410, "proyectos": [3], "trend": [60,65,70,74,78,82] },
+    { "id": "a4", "nombre": "CONAFOR", "tipo_actor": "gobierno", "iac_score": 79.8, "capital_movilizado_usd": 9100000, "co2_mitigado_ton": 120000, "hectareas_impactadas": 45000, "empleos_verdes": 2200, "proyectos": [27], "trend": [68,70,73,75,77,80] },
+    { "id": "a5", "nombre": "COBI", "tipo_actor": "sociedad-civil", "iac_score": 77.4, "capital_movilizado_usd": 6200000, "co2_mitigado_ton": 45000, "hectareas_impactadas": 15000, "empleos_verdes": 380, "proyectos": [22], "trend": [55,60,65,70,74,77] },
+    { "id": "a6", "nombre": "OPD Bosque La Primavera", "tipo_actor": "gobierno", "iac_score": 75.9, "capital_movilizado_usd": 5400000, "co2_mitigado_ton": 95000, "hectareas_impactadas": 30500, "empleos_verdes": 620, "proyectos": [5], "trend": [62,65,68,71,73,76] },
+    { "id": "a7", "nombre": "New Ventures", "tipo_actor": "fondo-inversion", "iac_score": 73.5, "capital_movilizado_usd": 15000000, "co2_mitigado_ton": 15000, "hectareas_impactadas": 0, "empleos_verdes": 85, "proyectos": [30], "trend": [50,55,60,65,70,74] },
+    { "id": "a8", "nombre": "SEDEMA CDMX", "tipo_actor": "gobierno", "iac_score": 71.2, "capital_movilizado_usd": 4800000, "co2_mitigado_ton": 15200, "hectareas_impactadas": 686, "empleos_verdes": 340, "proyectos": [2], "trend": [58,61,64,66,69,71] },
+    { "id": "a9", "nombre": "Centro Mario Molina", "tipo_actor": "academia", "iac_score": 68.8, "capital_movilizado_usd": 3200000, "co2_mitigado_ton": 35000, "hectareas_impactadas": 5, "empleos_verdes": 150, "proyectos": [23], "trend": [45,50,55,60,65,69] },
+    { "id": "a10", "nombre": "Isla Urbana", "tipo_actor": "emprendimiento-climatico", "iac_score": 66.3, "capital_movilizado_usd": 2800000, "co2_mitigado_ton": 120, "hectareas_impactadas": 0.5, "empleos_verdes": 210, "proyectos": [13], "trend": [42,48,53,58,63,66] },
+    { "id": "a11", "nombre": "Oceanus A.C.", "tipo_actor": "sociedad-civil", "iac_score": 64.1, "capital_movilizado_usd": 3100000, "co2_mitigado_ton": 15000, "hectareas_impactadas": 2500, "empleos_verdes": 175, "proyectos": [14], "trend": [40,45,50,55,60,64] },
+    { "id": "a12", "nombre": "Batu Energy", "tipo_actor": "empresa", "iac_score": 62.5, "capital_movilizado_usd": 7500000, "co2_mitigado_ton": 45000, "hectareas_impactadas": 120, "empleos_verdes": 290, "proyectos": [7], "trend": [35,40,48,54,59,63] }
+  ],
+  "proyectos": [
+    { "id": 1, "nombre": "Huerto Roma Verde · Regeneración Urbana", "sector": "Ecosistemas Resilientes", "subsector": "Regeneración urbana", "clasificacion": "adaptacion", "organizacion": "Huerto Roma Verde", "tipo_org": "ONG / Sociedad Civil", "estado": "CDMX", "municipio": "Benito Juárez", "cuenca": "Valle de México", "region": "Centro", "hectareas": 2.5, "co2_ton": 45, "beneficiarios": 12000, "financiamiento_usd": 450000, "financiamiento_mxn": 7650000, "status": "Activo", "necesidad": "Voluntarios", "year": 2012, "coordinates": [-99.1332, 19.4326],
+      "ambiental": { "co2_reducido": 30, "co2_removido": 15, "co2_verificado": 0, "m3_infiltrados": 1200, "m3_tratados": 800, "hectareas_restauradas": 2.5, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 25, "empleos_indirectos": 80, "comunidades_beneficiadas": 4, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 2, "nombre": "Bosque de Chapultepec · Restauración Ecológica", "sector": "Ecosistemas Resilientes", "subsector": "Restauración forestal", "clasificacion": "nbs", "organizacion": "SEDEMA CDMX", "tipo_org": "Gobierno", "estado": "CDMX", "municipio": "Miguel Hidalgo", "cuenca": "Valle de México", "region": "Centro", "hectareas": 686, "co2_ton": 15200, "beneficiarios": 500000, "financiamiento_usd": 4800000, "financiamiento_mxn": 81600000, "status": "Activo", "necesidad": "Financiamiento", "year": 2020, "coordinates": [-99.1876, 19.4236],
+      "ambiental": { "co2_reducido": 8200, "co2_removido": 7000, "co2_verificado": 5100, "m3_infiltrados": 85000, "m3_tratados": 0, "hectareas_restauradas": 420, "corredores_conectados": 2 },
+      "social": { "empleos_directos": 180, "empleos_indirectos": 500, "comunidades_beneficiadas": 12, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 3, "nombre": "Cuenca Valle de Bravo · Rescate Hídrico", "sector": "Ecosistemas Resilientes", "subsector": "Agua y recursos hídricos", "clasificacion": "nbs", "organizacion": "Agua Capital", "tipo_org": "ONG / Sociedad Civil", "estado": "Estado de México", "municipio": "Valle de Bravo", "cuenca": "Balsas", "region": "Centro", "hectareas": 3460, "co2_ton": 8700, "beneficiarios": 85000, "financiamiento_usd": 8700000, "financiamiento_mxn": 147900000, "status": "Activo", "necesidad": "Aliados", "year": 2021, "coordinates": [-99.6865, 19.2973],
+      "ambiental": { "co2_reducido": 4500, "co2_removido": 4200, "co2_verificado": 3200, "m3_infiltrados": 2400000, "m3_tratados": 850000, "recarga_acuifero_pct": 4.2, "cavs_emitidos": 3, "cuencas_intervenidas": 2, "hectareas_restauradas": 1800, "corredores_conectados": 1 },
+      "social": { "empleos_directos": 120, "empleos_indirectos": 450, "comunidades_beneficiadas": 28, "acuerdos_ejidales": 5, "acuerdos_indigenas": 0 }
+    },
+    { "id": 4, "nombre": "Selva Massiel · Conservación Comunitaria", "sector": "Ecosistemas Resilientes", "subsector": "Biodiversidad", "clasificacion": "nbs", "organizacion": "Comunidad Agraria", "tipo_org": "ONG / Sociedad Civil", "estado": "Oaxaca", "municipio": "San Pedro Pochutla", "cuenca": "Costa de Oaxaca", "region": "Sur-Sureste", "hectareas": 1169, "co2_ton": 32000, "beneficiarios": 450, "financiamiento_usd": 1200000, "financiamiento_mxn": 20400000, "status": "Activo", "necesidad": "Financiamiento", "year": 2018, "coordinates": [-96.7266, 17.0732],
+      "ambiental": { "co2_reducido": 18000, "co2_removido": 14000, "co2_verificado": 12500, "m3_infiltrados": 320000, "m3_tratados": 0, "indice_integridad_ecologica": 0.82, "especies_recuperadas": 12, "hectareas_restauradas": 850, "corredores_conectados": 1 },
+      "social": { "empleos_directos": 35, "empleos_indirectos": 120, "comunidades_beneficiadas": 3, "acuerdos_ejidales": 2, "acuerdos_indigenas": 3 }
+    },
+    { "id": 5, "nombre": "Bosque La Primavera · Prevención de Incendios", "sector": "Ecosistemas Resilientes", "subsector": "Restauración forestal", "clasificacion": "mitigacion", "organizacion": "OPD Bosque La Primavera", "tipo_org": "Gobierno", "estado": "Jalisco", "municipio": "Zapopan", "cuenca": "Lerma-Santiago", "region": "Occidente", "hectareas": 30500, "co2_ton": 95000, "beneficiarios": 200000, "financiamiento_usd": 5400000, "financiamiento_mxn": 91800000, "status": "Activo", "necesidad": "Tecnología", "year": 2019, "coordinates": [-103.3496, 20.6597],
+      "ambiental": { "co2_reducido": 65000, "co2_removido": 30000, "co2_verificado": 48000, "m3_infiltrados": 1500000, "m3_tratados": 0, "hectareas_restauradas": 8500, "corredores_conectados": 3 },
+      "social": { "empleos_directos": 320, "empleos_indirectos": 800, "comunidades_beneficiadas": 15, "acuerdos_ejidales": 4, "acuerdos_indigenas": 0 }
+    },
+    { "id": 6, "nombre": "Manglar Celestún · Restauración de Humedales", "sector": "Ecosistemas Resilientes", "subsector": "Biodiversidad", "clasificacion": "nbs", "organizacion": "CONANP", "tipo_org": "Gobierno", "estado": "Yucatán", "municipio": "Celestún", "cuenca": "Península de Yucatán", "region": "Sureste", "hectareas": 59139, "co2_ton": 280000, "beneficiarios": 7500, "financiamiento_usd": 12200000, "financiamiento_mxn": 207400000, "status": "Activo", "necesidad": "Voluntarios", "year": 2015, "coordinates": [-90.5296, 19.8454],
+      "ambiental": { "co2_reducido": 150000, "co2_removido": 130000, "co2_verificado": 95000, "m3_infiltrados": 8500000, "m3_tratados": 1200000, "recarga_acuifero_pct": 6.8, "cavs_emitidos": 8, "cuencas_intervenidas": 3, "indice_integridad_ecologica": 0.78, "especies_recuperadas": 24, "hectareas_restauradas": 12000, "corredores_conectados": 4 },
+      "social": { "empleos_directos": 280, "empleos_indirectos": 650, "comunidades_beneficiadas": 8, "acuerdos_ejidales": 6, "acuerdos_indigenas": 2 }
+    },
+    { "id": 7, "nombre": "Parque Solar Monterrey · Energía Limpia Industrial", "sector": "Innovación Catalítica", "subsector": "Transición energética", "clasificacion": "mitigacion", "organizacion": "Batu Energy", "tipo_org": "Empresa / Corporativo", "estado": "Nuevo León", "municipio": "Monterrey", "cuenca": "Río San Juan", "region": "Noreste", "hectareas": 120, "co2_ton": 45000, "beneficiarios": 35000, "financiamiento_usd": 7500000, "financiamiento_mxn": 127500000, "status": "Activo", "necesidad": "Financiamiento", "year": 2023, "coordinates": [-100.3161, 25.6866],
+      "ambiental": { "co2_reducido": 45000, "co2_removido": 0, "co2_verificado": 32000, "m3_infiltrados": 0, "m3_tratados": 0, "hectareas_restauradas": 0, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 180, "empleos_indirectos": 420, "comunidades_beneficiadas": 5, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 8, "nombre": "Ensenada Circular · Economía Circular Pesquera", "sector": "Innovación Catalítica", "subsector": "Economía circular", "clasificacion": "adaptacion", "organizacion": "Pesca con Futuro", "tipo_org": "ONG / Sociedad Civil", "estado": "Baja California", "municipio": "Ensenada", "cuenca": "Pacífico Norte", "region": "Noroeste", "hectareas": 15, "co2_ton": 1200, "beneficiarios": 3200, "financiamiento_usd": 680000, "financiamiento_mxn": 11560000, "status": "Activo", "necesidad": "Aliados", "year": 2022, "coordinates": [-116.5964, 31.8667],
+      "ambiental": { "co2_reducido": 800, "co2_removido": 400, "co2_verificado": 0, "m3_infiltrados": 0, "m3_tratados": 45000, "hectareas_restauradas": 8, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 65, "empleos_indirectos": 180, "comunidades_beneficiadas": 6, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 9, "nombre": "Cenotes Yucatán · Monitoreo de Agua Subterránea", "sector": "Ecosistemas Resilientes", "subsector": "Agua y recursos hídricos", "clasificacion": "adaptacion", "organizacion": "UNAM / Facultad de Ciencias", "tipo_org": "Academia / Institución", "estado": "Yucatán", "municipio": "Mérida", "cuenca": "Península de Yucatán", "region": "Sureste", "hectareas": 500, "co2_ton": 0, "beneficiarios": 15000, "financiamiento_usd": 1500000, "financiamiento_mxn": 25500000, "status": "Activo", "necesidad": "Tecnología", "year": 2024, "coordinates": [-89.6237, 20.9674],
+      "ambiental": { "co2_reducido": 0, "co2_removido": 0, "co2_verificado": 0, "m3_infiltrados": 3200000, "m3_tratados": 0, "recarga_acuifero_pct": 2.1, "cavs_emitidos": 0, "cuencas_intervenidas": 4, "hectareas_restauradas": 0, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 28, "empleos_indirectos": 65, "comunidades_beneficiadas": 12, "acuerdos_ejidales": 0, "acuerdos_indigenas": 3 }
+    },
+    { "id": 10, "nombre": "Sierra Madre Occidental · Corredor Biológico", "sector": "Ecosistemas Resilientes", "subsector": "Biodiversidad", "clasificacion": "nbs", "organizacion": "WWF México", "tipo_org": "ONG / Sociedad Civil", "estado": "Durango", "municipio": "Pueblo Nuevo", "cuenca": "Río Presidio", "region": "Noroeste", "hectareas": 125000, "co2_ton": 750000, "beneficiarios": 12000, "financiamiento_usd": 18500000, "financiamiento_mxn": 314500000, "status": "Activo", "necesidad": "Financiamiento", "year": 2020, "coordinates": [-104.6532, 24.0277],
+      "ambiental": { "co2_reducido": 420000, "co2_removido": 330000, "co2_verificado": 285000, "m3_infiltrados": 12000000, "m3_tratados": 0, "recarga_acuifero_pct": 8.5, "cavs_emitidos": 12, "cuencas_intervenidas": 5, "indice_integridad_ecologica": 0.88, "especies_recuperadas": 45, "hectareas_restauradas": 42000, "corredores_conectados": 6 },
+      "social": { "empleos_directos": 680, "empleos_indirectos": 1800, "comunidades_beneficiadas": 35, "acuerdos_ejidales": 12, "acuerdos_indigenas": 8 }
+    },
+    { "id": 11, "nombre": "Selva Lacandona · Agroforestería Regenerativa", "sector": "Ecosistemas Resilientes", "subsector": "Sistemas alimentarios", "clasificacion": "nbs", "organizacion": "Comunidades Lacandonas", "tipo_org": "ONG / Sociedad Civil", "estado": "Chiapas", "municipio": "Ocosingo", "cuenca": "Usumacinta", "region": "Sur-Sureste", "hectareas": 3500, "co2_ton": 85000, "beneficiarios": 6500, "financiamiento_usd": 2100000, "financiamiento_mxn": 35700000, "status": "Activo", "necesidad": "Aliados", "year": 2021, "coordinates": [-92.6376, 16.7528],
+      "ambiental": { "co2_reducido": 48000, "co2_removido": 37000, "co2_verificado": 22000, "m3_infiltrados": 950000, "m3_tratados": 0, "indice_integridad_ecologica": 0.75, "especies_recuperadas": 18, "hectareas_restauradas": 2200, "corredores_conectados": 2 },
+      "social": { "empleos_directos": 240, "empleos_indirectos": 580, "comunidades_beneficiadas": 14, "acuerdos_ejidales": 3, "acuerdos_indigenas": 8 }
+    },
+    { "id": 12, "nombre": "Bahía de Banderas · Turismo Regenerativo", "sector": "Innovación Catalítica", "subsector": "Turismo regenerativo", "clasificacion": "adaptacion", "organizacion": "Impact Hub Vallarta", "tipo_org": "Emprendedor / Startup", "estado": "Nayarit", "municipio": "Bahía de Banderas", "cuenca": "Pacífico Centro", "region": "Occidente", "hectareas": 80, "co2_ton": 2300, "beneficiarios": 8500, "financiamiento_usd": 920000, "financiamiento_mxn": 15640000, "status": "Activo", "necesidad": "Financiamiento", "year": 2023, "coordinates": [-105.2353, 20.6534],
+      "ambiental": { "co2_reducido": 1500, "co2_removido": 800, "co2_verificado": 0, "m3_infiltrados": 12000, "m3_tratados": 8000, "hectareas_restauradas": 35, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 95, "empleos_indirectos": 320, "comunidades_beneficiadas": 8, "acuerdos_ejidales": 1, "acuerdos_indigenas": 0 }
+    },
+    { "id": 13, "nombre": "San Luis Potosí · Captación de Agua de Lluvia", "sector": "Ecosistemas Resilientes", "subsector": "Agua y recursos hídricos", "clasificacion": "adaptacion", "organizacion": "Isla Urbana", "tipo_org": "Emprendedor / Startup", "estado": "San Luis Potosí", "municipio": "San Luis Potosí", "cuenca": "Pánuco", "region": "Centro-Norte", "hectareas": 0.5, "co2_ton": 120, "beneficiarios": 25000, "financiamiento_usd": 2800000, "financiamiento_mxn": 47600000, "status": "Activo", "necesidad": "Financiamiento", "year": 2019, "coordinates": [-100.9953, 22.1565],
+      "ambiental": { "co2_reducido": 80, "co2_removido": 40, "co2_verificado": 0, "m3_infiltrados": 520000, "m3_tratados": 380000, "recarga_acuifero_pct": 1.2, "cavs_emitidos": 0, "cuencas_intervenidas": 1, "hectareas_restauradas": 0, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 85, "empleos_indirectos": 210, "comunidades_beneficiadas": 42, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 14, "nombre": "Arrecife Mesoamericano · Restauración Coralina", "sector": "Ecosistemas Resilientes", "subsector": "Biodiversidad", "clasificacion": "nbs", "organizacion": "Oceanus A.C.", "tipo_org": "ONG / Sociedad Civil", "estado": "Quintana Roo", "municipio": "Benito Juárez", "cuenca": "Caribe Mexicano", "region": "Sureste", "hectareas": 2500, "co2_ton": 15000, "beneficiarios": 45000, "financiamiento_usd": 3100000, "financiamiento_mxn": 52700000, "status": "Activo", "necesidad": "Voluntarios", "year": 2017, "coordinates": [-86.8475, 21.1619],
+      "ambiental": { "co2_reducido": 8000, "co2_removido": 7000, "co2_verificado": 4200, "m3_infiltrados": 0, "m3_tratados": 150000, "indice_integridad_ecologica": 0.71, "especies_recuperadas": 32, "hectareas_restauradas": 1200, "corredores_conectados": 3 },
+      "social": { "empleos_directos": 75, "empleos_indirectos": 280, "comunidades_beneficiadas": 6, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 15, "nombre": "Acapulco Resiliente · Adaptación Costera", "sector": "Ecosistemas Resilientes", "subsector": "Regeneración urbana", "clasificacion": "adaptacion", "organizacion": "Gobierno Municipal", "tipo_org": "Gobierno", "estado": "Guerrero", "municipio": "Acapulco", "cuenca": "Costa Grande", "region": "Sur", "hectareas": 350, "co2_ton": 4500, "beneficiarios": 120000, "financiamiento_usd": 6800000, "financiamiento_mxn": 115600000, "status": "Activo", "necesidad": "Financiamiento", "year": 2024, "coordinates": [-99.8237, 16.8531],
+      "ambiental": { "co2_reducido": 2800, "co2_removido": 1700, "co2_verificado": 0, "m3_infiltrados": 180000, "m3_tratados": 95000, "hectareas_restauradas": 120, "corredores_conectados": 1 },
+      "social": { "empleos_directos": 450, "empleos_indirectos": 1200, "comunidades_beneficiadas": 22, "acuerdos_ejidales": 2, "acuerdos_indigenas": 0 }
+    },
+    { "id": 16, "nombre": "Colima · Monitoreo Volcánico y Resiliencia", "sector": "Despertar Planetario", "subsector": "Educación climática", "clasificacion": "adaptacion", "organizacion": "Universidad de Colima", "tipo_org": "Academia / Institución", "estado": "Colima", "municipio": "Colima", "cuenca": "Armería-Coahuayana", "region": "Occidente", "hectareas": 0, "co2_ton": 0, "beneficiarios": 8000, "financiamiento_usd": 980000, "financiamiento_mxn": 16660000, "status": "Activo", "necesidad": "Tecnología", "year": 2022, "coordinates": [-103.7254, 19.2433],
+      "ambiental": { "co2_reducido": 0, "co2_removido": 0, "co2_verificado": 0, "m3_infiltrados": 0, "m3_tratados": 0, "hectareas_restauradas": 0, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 22, "empleos_indirectos": 45, "comunidades_beneficiadas": 6, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 17, "nombre": "Xalapa · Ciudad Esponja", "sector": "Innovación Catalítica", "subsector": "Ciudades sostenibles", "clasificacion": "hibrido", "organizacion": "INECOL", "tipo_org": "Academia / Institución", "estado": "Veracruz", "municipio": "Xalapa", "cuenca": "Tuxpan-Nautla", "region": "Golfo", "hectareas": 45, "co2_ton": 2100, "beneficiarios": 55000, "financiamiento_usd": 1800000, "financiamiento_mxn": 30600000, "status": "Activo", "necesidad": "Aliados", "year": 2023, "coordinates": [-96.9223, 19.5438],
+      "ambiental": { "co2_reducido": 1200, "co2_removido": 900, "co2_verificado": 0, "m3_infiltrados": 420000, "m3_tratados": 180000, "recarga_acuifero_pct": 3.1, "cavs_emitidos": 0, "cuencas_intervenidas": 1, "hectareas_restauradas": 28, "corredores_conectados": 1 },
+      "social": { "empleos_directos": 42, "empleos_indirectos": 130, "comunidades_beneficiadas": 10, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 18, "nombre": "Hermosillo Solar · Comunidad Energética", "sector": "Innovación Catalítica", "subsector": "Transición energética", "clasificacion": "mitigacion", "organizacion": "Solar de Sonora", "tipo_org": "Emprendedor / Startup", "estado": "Sonora", "municipio": "Hermosillo", "cuenca": "Sonora", "region": "Noroeste", "hectareas": 200, "co2_ton": 65000, "beneficiarios": 15000, "financiamiento_usd": 4200000, "financiamiento_mxn": 71400000, "status": "Activo", "necesidad": "Financiamiento", "year": 2024, "coordinates": [-110.9559, 29.0729],
+      "ambiental": { "co2_reducido": 65000, "co2_removido": 0, "co2_verificado": 0, "m3_infiltrados": 0, "m3_tratados": 0, "hectareas_restauradas": 0, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 95, "empleos_indirectos": 240, "comunidades_beneficiadas": 3, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 19, "nombre": "Papantla · Vainilla y Biodiversidad", "sector": "Ecosistemas Resilientes", "subsector": "Sistemas alimentarios", "clasificacion": "nbs", "organizacion": "Cooperativa Totonacu", "tipo_org": "ONG / Sociedad Civil", "estado": "Veracruz", "municipio": "Papantla", "cuenca": "Tecolutla", "region": "Golfo", "hectareas": 850, "co2_ton": 18000, "beneficiarios": 3200, "financiamiento_usd": 1100000, "financiamiento_mxn": 18700000, "status": "Activo", "necesidad": "Aliados", "year": 2020, "coordinates": [-97.3924, 21.1542],
+      "ambiental": { "co2_reducido": 10000, "co2_removido": 8000, "co2_verificado": 5500, "m3_infiltrados": 180000, "m3_tratados": 0, "indice_integridad_ecologica": 0.69, "especies_recuperadas": 8, "hectareas_restauradas": 520, "corredores_conectados": 1 },
+      "social": { "empleos_directos": 140, "empleos_indirectos": 380, "comunidades_beneficiadas": 5, "acuerdos_ejidales": 2, "acuerdos_indigenas": 4 }
+    },
+    { "id": 20, "nombre": "Xochimilco · Rescate de Chinampas", "sector": "Ecosistemas Resilientes", "subsector": "Sistemas alimentarios", "clasificacion": "nbs", "organizacion": "Chinampas Verdes", "tipo_org": "Emprendedor / Startup", "estado": "CDMX", "municipio": "Xochimilco", "cuenca": "Valle de México", "region": "Centro", "hectareas": 25, "co2_ton": 800, "beneficiarios": 5000, "financiamiento_usd": 520000, "financiamiento_mxn": 8840000, "status": "Activo", "necesidad": "Voluntarios", "year": 2021, "coordinates": [-99.0066, 19.3593],
+      "ambiental": { "co2_reducido": 450, "co2_removido": 350, "co2_verificado": 0, "m3_infiltrados": 65000, "m3_tratados": 42000, "hectareas_restauradas": 18, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 32, "empleos_indirectos": 95, "comunidades_beneficiadas": 4, "acuerdos_ejidales": 1, "acuerdos_indigenas": 0 }
+    },
+    { "id": 21, "nombre": "Pátzcuaro · Restauración Lacustre", "sector": "Ecosistemas Resilientes", "subsector": "Agua y recursos hídricos", "clasificacion": "nbs", "organizacion": "Fundación Lago de Pátzcuaro", "tipo_org": "ONG / Sociedad Civil", "estado": "Michoacán", "municipio": "Pátzcuaro", "cuenca": "Lerma-Santiago", "region": "Occidente", "hectareas": 9750, "co2_ton": 22000, "beneficiarios": 35000, "financiamiento_usd": 3400000, "financiamiento_mxn": 57800000, "status": "Activo", "necesidad": "Financiamiento", "year": 2022, "coordinates": [-101.1950, 19.7028],
+      "ambiental": { "co2_reducido": 12000, "co2_removido": 10000, "co2_verificado": 6800, "m3_infiltrados": 4800000, "m3_tratados": 1200000, "recarga_acuifero_pct": 5.4, "cavs_emitidos": 4, "cuencas_intervenidas": 2, "hectareas_restauradas": 3200, "corredores_conectados": 2 },
+      "social": { "empleos_directos": 180, "empleos_indirectos": 420, "comunidades_beneficiadas": 18, "acuerdos_ejidales": 4, "acuerdos_indigenas": 6 }
+    },
+    { "id": 22, "nombre": "Los Cabos · Corredores de Biodiversidad Marina", "sector": "Ecosistemas Resilientes", "subsector": "Biodiversidad", "clasificacion": "nbs", "organizacion": "COBI", "tipo_org": "ONG / Sociedad Civil", "estado": "Baja California Sur", "municipio": "Los Cabos", "cuenca": "Pacífico Sur BCS", "region": "Noroeste", "hectareas": 15000, "co2_ton": 45000, "beneficiarios": 12000, "financiamiento_usd": 6200000, "financiamiento_mxn": 105400000, "status": "Activo", "necesidad": "Tecnología", "year": 2019, "coordinates": [-109.9124, 22.8905],
+      "ambiental": { "co2_reducido": 25000, "co2_removido": 20000, "co2_verificado": 15000, "m3_infiltrados": 0, "m3_tratados": 0, "indice_integridad_ecologica": 0.84, "especies_recuperadas": 38, "hectareas_restauradas": 5200, "corredores_conectados": 5 },
+      "social": { "empleos_directos": 140, "empleos_indirectos": 380, "comunidades_beneficiadas": 9, "acuerdos_ejidales": 3, "acuerdos_indigenas": 0 }
+    },
+    { "id": 23, "nombre": "Querétaro · Industria Verde 4.0", "sector": "Innovación Catalítica", "subsector": "Economía circular", "clasificacion": "mitigacion", "organizacion": "Centro Mario Molina", "tipo_org": "Academia / Institución", "estado": "Querétaro", "municipio": "Querétaro", "cuenca": "Lerma-Santiago", "region": "Centro", "hectareas": 5, "co2_ton": 35000, "beneficiarios": 25000, "financiamiento_usd": 3200000, "financiamiento_mxn": 54400000, "status": "Activo", "necesidad": "Aliados", "year": 2024, "coordinates": [-100.4000, 20.5928],
+      "ambiental": { "co2_reducido": 35000, "co2_removido": 0, "co2_verificado": 18000, "m3_infiltrados": 0, "m3_tratados": 120000, "hectareas_restauradas": 0, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 65, "empleos_indirectos": 320, "comunidades_beneficiadas": 4, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 24, "nombre": "Puebla · Justicia Climática Indígena", "sector": "Despertar Planetario", "subsector": "Justicia climática", "clasificacion": "adaptacion", "organizacion": "Red de Pueblos Originarios", "tipo_org": "ONG / Sociedad Civil", "estado": "Puebla", "municipio": "Puebla", "cuenca": "Balsas", "region": "Centro", "hectareas": 0, "co2_ton": 0, "beneficiarios": 45000, "financiamiento_usd": 380000, "financiamiento_mxn": 6460000, "status": "Activo", "necesidad": "Financiamiento", "year": 2023, "coordinates": [-98.2063, 19.0414],
+      "ambiental": { "co2_reducido": 0, "co2_removido": 0, "co2_verificado": 0, "m3_infiltrados": 0, "m3_tratados": 0, "hectareas_restauradas": 0, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 18, "empleos_indirectos": 85, "comunidades_beneficiadas": 32, "acuerdos_ejidales": 0, "acuerdos_indigenas": 15 }
+    },
+    { "id": 25, "nombre": "Chiapas · Café Climáticamente Inteligente", "sector": "Ecosistemas Resilientes", "subsector": "Sistemas alimentarios", "clasificacion": "hibrido", "organizacion": "Coop. Café Justo", "tipo_org": "ONG / Sociedad Civil", "estado": "Chiapas", "municipio": "San Cristóbal de las Casas", "cuenca": "Grijalva-Usumacinta", "region": "Sur-Sureste", "hectareas": 2200, "co2_ton": 35000, "beneficiarios": 8000, "financiamiento_usd": 1650000, "financiamiento_mxn": 28050000, "status": "Activo", "necesidad": "Financiamiento", "year": 2021, "coordinates": [-93.1029, 16.7569],
+      "ambiental": { "co2_reducido": 20000, "co2_removido": 15000, "co2_verificado": 11000, "m3_infiltrados": 280000, "m3_tratados": 0, "indice_integridad_ecologica": 0.66, "especies_recuperadas": 6, "hectareas_restauradas": 1400, "corredores_conectados": 1 },
+      "social": { "empleos_directos": 320, "empleos_indirectos": 850, "comunidades_beneficiadas": 15, "acuerdos_ejidales": 5, "acuerdos_indigenas": 12 }
+    },
+    { "id": 26, "nombre": "Mazatlán · Movilidad Sostenible Costera", "sector": "Innovación Catalítica", "subsector": "Ciudades sostenibles", "clasificacion": "mitigacion", "organizacion": "Gobierno Municipal", "tipo_org": "Gobierno", "estado": "Sinaloa", "municipio": "Mazatlán", "cuenca": "Presidio-San Pedro", "region": "Noroeste", "hectareas": 15, "co2_ton": 8500, "beneficiarios": 65000, "financiamiento_usd": 2400000, "financiamiento_mxn": 40800000, "status": "Activo", "necesidad": "Tecnología", "year": 2024, "coordinates": [-106.4245, 23.2494],
+      "ambiental": { "co2_reducido": 8500, "co2_removido": 0, "co2_verificado": 0, "m3_infiltrados": 0, "m3_tratados": 0, "hectareas_restauradas": 0, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 120, "empleos_indirectos": 350, "comunidades_beneficiadas": 8, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 27, "nombre": "Altiplano Potosino · Restauración de Matorral Xerófilo", "sector": "Ecosistemas Resilientes", "subsector": "Restauración forestal", "clasificacion": "nbs", "organizacion": "CONAFOR", "tipo_org": "Gobierno", "estado": "San Luis Potosí", "municipio": "Matehuala", "cuenca": "Altiplano", "region": "Centro-Norte", "hectareas": 45000, "co2_ton": 120000, "beneficiarios": 15000, "financiamiento_usd": 9100000, "financiamiento_mxn": 154700000, "status": "Activo", "necesidad": "Voluntarios", "year": 2022, "coordinates": [-100.3899, 23.7369],
+      "ambiental": { "co2_reducido": 68000, "co2_removido": 52000, "co2_verificado": 35000, "m3_infiltrados": 2800000, "m3_tratados": 0, "recarga_acuifero_pct": 3.8, "cavs_emitidos": 6, "cuencas_intervenidas": 3, "hectareas_restauradas": 18000, "corredores_conectados": 2 },
+      "social": { "empleos_directos": 850, "empleos_indirectos": 1800, "comunidades_beneficiadas": 22, "acuerdos_ejidales": 8, "acuerdos_indigenas": 0 }
+    },
+    { "id": 28, "nombre": "Coyoacán · Educación Climática para Infancias", "sector": "Despertar Planetario", "subsector": "Educación climática", "clasificacion": "adaptacion", "organizacion": "Papalote Museo del Niño", "tipo_org": "ONG / Sociedad Civil", "estado": "CDMX", "municipio": "Coyoacán", "cuenca": "Valle de México", "region": "Centro", "hectareas": 0, "co2_ton": 0, "beneficiarios": 150000, "financiamiento_usd": 620000, "financiamiento_mxn": 10540000, "status": "Activo", "necesidad": "Aliados", "year": 2025, "coordinates": [-99.1013, 19.2869],
+      "ambiental": { "co2_reducido": 0, "co2_removido": 0, "co2_verificado": 0, "m3_infiltrados": 0, "m3_tratados": 0, "hectareas_restauradas": 0, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 35, "empleos_indirectos": 120, "comunidades_beneficiadas": 8, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    },
+    { "id": 29, "nombre": "Sinaloa · Agricultura Regenerativa a Gran Escala", "sector": "Ecosistemas Resilientes", "subsector": "Sistemas alimentarios", "clasificacion": "hibrido", "organizacion": "Syntropia MX", "tipo_org": "Emprendedor / Startup", "estado": "Sinaloa", "municipio": "Culiacán", "cuenca": "Culiacán", "region": "Noroeste", "hectareas": 5000, "co2_ton": 55000, "beneficiarios": 12000, "financiamiento_usd": 3800000, "financiamiento_mxn": 64600000, "status": "Activo", "necesidad": "Financiamiento", "year": 2024, "coordinates": [-107.3939, 24.7904],
+      "ambiental": { "co2_reducido": 32000, "co2_removido": 23000, "co2_verificado": 0, "m3_infiltrados": 1800000, "m3_tratados": 450000, "hectareas_restauradas": 3200, "corredores_conectados": 1 },
+      "social": { "empleos_directos": 420, "empleos_indirectos": 980, "comunidades_beneficiadas": 12, "acuerdos_ejidales": 6, "acuerdos_indigenas": 0 }
+    },
+    { "id": 30, "nombre": "Aguascalientes · Finanzas Verdes para PyMEs", "sector": "Innovación Catalítica", "subsector": "Finanzas sostenibles", "clasificacion": "mitigacion", "organizacion": "New Ventures", "tipo_org": "Fondo de Inversión", "estado": "Aguascalientes", "municipio": "Aguascalientes", "cuenca": "Lerma-Santiago", "region": "Centro", "hectareas": 0, "co2_ton": 15000, "beneficiarios": 200, "financiamiento_usd": 15000000, "financiamiento_mxn": 255000000, "status": "Activo", "necesidad": "Aliados", "year": 2025, "coordinates": [-100.9893, 21.8853],
+      "ambiental": { "co2_reducido": 15000, "co2_removido": 0, "co2_verificado": 0, "m3_infiltrados": 0, "m3_tratados": 0, "hectareas_restauradas": 0, "corredores_conectados": 0 },
+      "social": { "empleos_directos": 35, "empleos_indirectos": 150, "comunidades_beneficiadas": 2, "acuerdos_ejidales": 0, "acuerdos_indigenas": 0 }
+    }
+  ],
+  "desembolsos": [
+    { "id": 1, "proyecto_id": 10, "monto_usd": 4200000, "fecha": "2020-06-15", "fuente": "GEF", "tipo": "subvencion" },
+    { "id": 2, "proyecto_id": 10, "monto_usd": 6800000, "fecha": "2021-03-22", "fuente": "GCF", "tipo": "subvencion" },
+    { "id": 3, "proyecto_id": 10, "monto_usd": 3500000, "fecha": "2022-09-10", "fuente": "WWF Internacional", "tipo": "donacion" },
+    { "id": 4, "proyecto_id": 10, "monto_usd": 4000000, "fecha": "2024-01-18", "fuente": "Bonos verdes", "tipo": "credito" },
+    { "id": 5, "proyecto_id": 6, "monto_usd": 3200000, "fecha": "2015-08-01", "fuente": "CONANP Federal", "tipo": "presupuesto" },
+    { "id": 6, "proyecto_id": 6, "monto_usd": 4500000, "fecha": "2018-04-12", "fuente": "GEF", "tipo": "subvencion" },
+    { "id": 7, "proyecto_id": 6, "monto_usd": 2800000, "fecha": "2020-11-05", "fuente": "KfW", "tipo": "cooperacion" },
+    { "id": 8, "proyecto_id": 6, "monto_usd": 1700000, "fecha": "2023-06-20", "fuente": "FMCN", "tipo": "donacion" },
+    { "id": 9, "proyecto_id": 5, "monto_usd": 1800000, "fecha": "2019-03-15", "fuente": "Gobierno Jalisco", "tipo": "presupuesto" },
+    { "id": 10, "proyecto_id": 5, "monto_usd": 2200000, "fecha": "2021-07-01", "fuente": "CONAFOR", "tipo": "presupuesto" },
+    { "id": 11, "proyecto_id": 5, "monto_usd": 1400000, "fecha": "2023-02-28", "fuente": "AFD Francia", "tipo": "cooperacion" },
+    { "id": 12, "proyecto_id": 3, "monto_usd": 2500000, "fecha": "2021-05-10", "fuente": "BID Invest", "tipo": "credito" },
+    { "id": 13, "proyecto_id": 3, "monto_usd": 3200000, "fecha": "2022-08-15", "fuente": "FEMSA", "tipo": "donacion" },
+    { "id": 14, "proyecto_id": 3, "monto_usd": 3000000, "fecha": "2024-04-01", "fuente": "Gobierno EdoMex", "tipo": "presupuesto" },
+    { "id": 15, "proyecto_id": 7, "monto_usd": 3500000, "fecha": "2023-01-20", "fuente": "Inversionistas privados", "tipo": "equity" },
+    { "id": 16, "proyecto_id": 7, "monto_usd": 4000000, "fecha": "2024-06-15", "fuente": "NADBANK", "tipo": "credito" },
+    { "id": 17, "proyecto_id": 30, "monto_usd": 8000000, "fecha": "2025-01-10", "fuente": "LPs institucionales", "tipo": "equity" },
+    { "id": 18, "proyecto_id": 30, "monto_usd": 7000000, "fecha": "2025-09-01", "fuente": "BID Lab", "tipo": "subvencion" },
+    { "id": 19, "proyecto_id": 22, "monto_usd": 2400000, "fecha": "2019-06-01", "fuente": "Walton Foundation", "tipo": "donacion" },
+    { "id": 20, "proyecto_id": 22, "monto_usd": 2000000, "fecha": "2021-03-15", "fuente": "Packard Foundation", "tipo": "donacion" },
+    { "id": 21, "proyecto_id": 22, "monto_usd": 1800000, "fecha": "2023-11-01", "fuente": "GEF Small Grants", "tipo": "subvencion" },
+    { "id": 22, "proyecto_id": 27, "monto_usd": 4500000, "fecha": "2022-02-01", "fuente": "CONAFOR Federal", "tipo": "presupuesto" },
+    { "id": 23, "proyecto_id": 27, "monto_usd": 2800000, "fecha": "2023-08-15", "fuente": "FMCN", "tipo": "donacion" },
+    { "id": 24, "proyecto_id": 27, "monto_usd": 1800000, "fecha": "2025-01-20", "fuente": "EU-FLEGT", "tipo": "cooperacion" },
+    { "id": 25, "proyecto_id": 15, "monto_usd": 6800000, "fecha": "2024-03-01", "fuente": "Banco Mundial", "tipo": "credito" },
+    { "id": 26, "proyecto_id": 2, "monto_usd": 2800000, "fecha": "2020-09-15", "fuente": "SEDEMA CDMX", "tipo": "presupuesto" },
+    { "id": 27, "proyecto_id": 2, "monto_usd": 2000000, "fecha": "2023-01-10", "fuente": "C40 Cities", "tipo": "donacion" },
+    { "id": 28, "proyecto_id": 29, "monto_usd": 3800000, "fecha": "2024-05-01", "fuente": "Impacto Capital", "tipo": "equity" },
+    { "id": 29, "proyecto_id": 11, "monto_usd": 2100000, "fecha": "2021-07-15", "fuente": "Rainforest Alliance", "tipo": "subvencion" },
+    { "id": 30, "proyecto_id": 25, "monto_usd": 1650000, "fecha": "2021-11-01", "fuente": "Root Capital", "tipo": "credito" },
+    { "id": 31, "proyecto_id": 13, "monto_usd": 1200000, "fecha": "2019-04-01", "fuente": "Skoll Foundation", "tipo": "donacion" },
+    { "id": 32, "proyecto_id": 13, "monto_usd": 1600000, "fecha": "2022-06-15", "fuente": "CONAGUA", "tipo": "presupuesto" },
+    { "id": 33, "proyecto_id": 18, "monto_usd": 4200000, "fecha": "2024-08-01", "fuente": "Climate Fund", "tipo": "equity" },
+    { "id": 34, "proyecto_id": 4, "monto_usd": 1200000, "fecha": "2018-05-15", "fuente": "GIZ México", "tipo": "cooperacion" },
+    { "id": 35, "proyecto_id": 21, "monto_usd": 3400000, "fecha": "2022-04-01", "fuente": "CONAGUA + FMCN", "tipo": "mixto" }
+  ],
+  "verificaciones": [
+    { "id": 1, "proyecto_id": 10, "estandar": "VCS", "registro_id": "VCS-2847", "fecha": "2022-06-15", "creditos_ton": 185000, "url_registro": "https://registry.verra.org" },
+    { "id": 2, "proyecto_id": 10, "estandar": "CCB", "registro_id": "CCB-1204", "fecha": "2023-03-20", "creditos_ton": 100000, "url_registro": "https://registry.verra.org" },
+    { "id": 3, "proyecto_id": 6, "estandar": "VCS", "registro_id": "VCS-3156", "fecha": "2021-09-10", "creditos_ton": 52000, "url_registro": "https://registry.verra.org" },
+    { "id": 4, "proyecto_id": 6, "estandar": "VCS", "registro_id": "VCS-3156-R2", "fecha": "2024-01-15", "creditos_ton": 43000, "url_registro": "https://registry.verra.org" },
+    { "id": 5, "proyecto_id": 5, "estandar": "CAR", "registro_id": "CAR-MX-482", "fecha": "2021-04-22", "creditos_ton": 28000, "url_registro": "https://www.climateactionreserve.org" },
+    { "id": 6, "proyecto_id": 5, "estandar": "CAR", "registro_id": "CAR-MX-482-V2", "fecha": "2023-08-30", "creditos_ton": 20000, "url_registro": "https://www.climateactionreserve.org" },
+    { "id": 7, "proyecto_id": 4, "estandar": "Plan Vivo", "registro_id": "PV-MX-0089", "fecha": "2020-12-01", "creditos_ton": 8500, "url_registro": "https://www.planvivo.org" },
+    { "id": 8, "proyecto_id": 4, "estandar": "Plan Vivo", "registro_id": "PV-MX-0089-R2", "fecha": "2023-05-15", "creditos_ton": 4000, "url_registro": "https://www.planvivo.org" },
+    { "id": 9, "proyecto_id": 22, "estandar": "Blue Carbon", "registro_id": "BC-MX-015", "fecha": "2022-11-20", "creditos_ton": 15000, "url_registro": "https://registry.verra.org" },
+    { "id": 10, "proyecto_id": 27, "estandar": "CAR", "registro_id": "CAR-MX-621", "fecha": "2024-02-28", "creditos_ton": 35000, "url_registro": "https://www.climateactionreserve.org" },
+    { "id": 11, "proyecto_id": 7, "estandar": "I-REC", "registro_id": "IREC-MX-8842", "fecha": "2024-09-15", "creditos_ton": 32000, "url_registro": "https://www.irecstandard.org" },
+    { "id": 12, "proyecto_id": 25, "estandar": "Rainforest Alliance", "registro_id": "RA-MX-2204", "fecha": "2023-07-10", "creditos_ton": 11000, "url_registro": "https://www.rainforest-alliance.org" },
+    { "id": 13, "proyecto_id": 19, "estandar": "Plan Vivo", "registro_id": "PV-MX-0145", "fecha": "2023-01-25", "creditos_ton": 5500, "url_registro": "https://www.planvivo.org" },
+    { "id": 14, "proyecto_id": 23, "estandar": "ISO 14064", "registro_id": "ISO-CMM-MX-01", "fecha": "2025-04-10", "creditos_ton": 18000, "url_registro": null },
+    { "id": 15, "proyecto_id": 21, "estandar": "Gold Standard", "registro_id": "GS-MX-0534", "fecha": "2024-06-01", "creditos_ton": 6800, "url_registro": "https://registry.goldstandard.org" },
+    { "id": 16, "proyecto_id": 11, "estandar": "VCS", "registro_id": "VCS-4102", "fecha": "2024-03-15", "creditos_ton": 22000, "url_registro": "https://registry.verra.org" },
+    { "id": 17, "proyecto_id": 2, "estandar": "CAR", "registro_id": "CAR-MX-550", "fecha": "2023-10-01", "creditos_ton": 5100, "url_registro": "https://www.climateactionreserve.org" }
+  ]
+}

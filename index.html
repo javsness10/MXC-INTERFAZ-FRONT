@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>MPC Atlas · Visualizar el Territorio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=League+Spartan:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 50: '#f4f4f5', 100: '#e4e4e6', 200: '#c4c4c8', 300: '#9f9fa3', 400: '#7a7a7f', 500: '#55555c', 600: '#3d3d42', 700: '#2a2a2e', 800: '#1a1a1d', 900: '#121214', 950: '#0a0a0b' },
+            mpc: { green: '#2CB67D', yellow: '#F9A826', red: '#E63946', teal: '#3A9E9E', blue: '#1E6091' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['League Spartan', 'system-ui', 'sans-serif'],
+          },
+          borderRadius: { '2xl': '16px', '3xl': '20px' },
+        }
+      }
+    }
+  </script>
+
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="bg-navy-950 text-white/95 font-sans overflow-hidden h-screen flex flex-col">
+
+  <!-- ==================== SPLASH (anteportada) ==================== -->
+  <div id="splash" class="splash-screen">
+    <div class="splash-hero-bg" aria-hidden="true"></div>
+    <div class="splash-hero-overlay" aria-hidden="true"></div>
+    <div class="splash-card">
+      <div class="splash-logo-wrap">
+        <img class="splash-logo" src="assets/MPC_LOGO_BLANCOLOR-1024x870.webp" alt="México por el Clima · Semana de Acción" />
+        <div class="splash-powered-by">
+          <span class="splash-powered-by__text">powered by</span>
+          <img src="assets/aosenuma-icon-white.png" alt="aosenuma" class="splash-powered-by__logo" />
+          <span class="splash-powered-by__name">aosenuma</span>
+        </div>
+      </div>
+      <p class="splash-kicker">Módulo 3</p>
+      <h1 class="splash-title">Visualizar el Territorio</h1>
+      <p class="splash-sub">Atlas digital del ecosistema climático de México</p>
+      <div class="splash-stats">
+        <div><span class="stat-n">30+</span><span class="stat-l">Proyectos</span></div>
+        <div><span class="stat-n">14</span><span class="stat-l">Grupos</span></div>
+        <div><span class="stat-n">300+</span><span class="stat-l">Orgs</span></div>
+      </div>
+      <button id="splash-enter" type="button" class="btn-mpc btn-mpc--primary btn-mpc--block">Explorar el Territorio</button>
+      <p class="splash-foot">Semana de Acción 2026 · 5-9 octubre</p>
+    </div>
+    <footer class="sponsors-glass sponsors-glass--screen" aria-label="Patrocinadores">
+      <p class="sponsors-glass__eyebrow">Con el apoyo de</p>
+      <div class="sponsors-glass__track">
+        <img src="assets/patrocinadores/3m.png" alt="3M" class="sponsors-glass__logo" width="80" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/marshmclennan.png" alt="Marsh McLennan" class="sponsors-glass__logo" width="120" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/banorte.png" alt="Banorte" class="sponsors-glass__logo" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/bimbo.png" alt="Bimbo" class="sponsors-glass__logo" width="90" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/heineken.png" alt="Heineken" class="sponsors-glass__logo sponsors-glass__logo--heineken" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/hsbc.png" alt="HSBC" class="sponsors-glass__logo" width="90" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/nestle.png" alt="Nestlé" class="sponsors-glass__logo" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/scotiabank.png" alt="Scotiabank" class="sponsors-glass__logo" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/tesla.png" alt="Tesla" class="sponsors-glass__logo sponsors-glass__logo--tesla" width="90" height="28" loading="lazy" decoding="async" />
+      </div>
+    </footer>
+  </div>
+
+  <!-- ==================== SELECCIÓN DE ACTOR (entre landing y visor) ==================== -->
+  <div id="actor-select" class="actor-select-screen">
+    <div class="actor-select-bg" aria-hidden="true">
+      <div class="actor-select-bg-hero"></div>
+    </div>
+    <div class="actor-select-overlay" aria-hidden="true"></div>
+    <div class="actor-select-inner">
+      <div class="actor-select-card">
+        <p class="actor-select-eyebrow">México por el Clima · Visualizar el Territorio</p>
+        <h2 class="actor-select-title">¿Qué actor eres en el ecosistema?</h2>
+        <p class="actor-select-lead">Elige tu perfil para contextualizar el atlas. Podrás cambiarlo más adelante.</p>
+        <div class="actor-select-spectator" aria-label="Modo espectador">
+          <span class="actor-select-spectator-label">Espectador</span>
+          <p class="actor-select-spectator-hint">Solo navegas el mapa; no representas un rol en el ecosistema.</p>
+          <button type="button" class="actor-tile actor-tile--spectator" data-actor="visitante">Visitante</button>
+        </div>
+        <div class="actor-select-grid" role="list">
+          <button type="button" class="actor-tile" data-actor="empresa" role="listitem">Empresa</button>
+          <button type="button" class="actor-tile" data-actor="fondo-inversion" role="listitem">Fondo de inversión</button>
+          <button type="button" class="actor-tile" data-actor="sociedad-civil" role="listitem">Sociedad civil</button>
+          <button type="button" class="actor-tile" data-actor="gobierno" role="listitem">Gobierno</button>
+          <button type="button" class="actor-tile" data-actor="academia" role="listitem">Academia</button>
+          <button type="button" class="actor-tile" data-actor="emprendimiento-climatico" role="listitem">Emprendimiento climático</button>
+          <button type="button" class="actor-tile" data-actor="desarrollador" role="listitem">Consultor / implementador</button>
+        </div>
+        <div class="actor-select-admin" aria-label="Acceso exclusivo">
+          <span class="actor-select-admin-label">Exclusivo</span>
+          <button type="button" class="actor-tile actor-tile--admin" data-actor="administrador">Administrador</button>
+        </div>
+      </div>
+    </div>
+    <footer class="sponsors-glass sponsors-glass--screen" aria-label="Patrocinadores">
+      <p class="sponsors-glass__eyebrow">Con el apoyo de</p>
+      <div class="sponsors-glass__track">
+        <img src="assets/patrocinadores/3m.png" alt="3M" class="sponsors-glass__logo" width="80" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/marshmclennan.png" alt="Marsh McLennan" class="sponsors-glass__logo" width="120" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/banorte.png" alt="Banorte" class="sponsors-glass__logo" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/bimbo.png" alt="Bimbo" class="sponsors-glass__logo" width="90" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/heineken.png" alt="Heineken" class="sponsors-glass__logo sponsors-glass__logo--heineken" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/hsbc.png" alt="HSBC" class="sponsors-glass__logo" width="90" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/nestle.png" alt="Nestlé" class="sponsors-glass__logo" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/scotiabank.png" alt="Scotiabank" class="sponsors-glass__logo" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/tesla.png" alt="Tesla" class="sponsors-glass__logo sponsors-glass__logo--tesla" width="90" height="28" loading="lazy" decoding="async" />
+      </div>
+    </footer>
+  </div>
+
+  <!-- ==================== DASHBOARD DE INTELIGENCIA TERRITORIAL ==================== -->
+  <div id="mpc-dashboard" class="dash-screen is-hidden" aria-hidden="true">
+
+    <!-- Background layers -->
+    <div class="dash-bg" aria-hidden="true">
+      <div class="dash-bg__photo"></div>
+      <div class="dash-bg__overlay"></div>
+      <div class="dash-bg__grain"></div>
+    </div>
+
+    <!-- HEADER DINÁMICO -->
+    <header class="dash-topbar">
+      <div class="dash-topbar__brand">
+        <img src="assets/LOGO-3.webp" alt="MPC" class="h-7" />
+        <div class="leading-tight">
+          <span class="font-display text-[13px] font-semibold text-white tracking-tight">México por el Clima</span>
+          <span class="block text-[9px] font-medium text-white/45 uppercase tracking-[0.1em]">Dashboard de Inteligencia</span>
+        </div>
+        <span class="powered-by-sep" aria-hidden="true"></span>
+        <a href="#" class="powered-by-badge" aria-label="Powered by aosenuma">
+          <span class="powered-by-badge__text">powered by</span>
+          <img src="assets/aosenuma-icon-white.png" alt="aosenuma" class="powered-by-badge__logo" />
+          <span class="powered-by-badge__name">aosenuma</span>
+        </a>
+      </div>
+      <div class="dash-topbar__countdown" id="dash-countdown" aria-live="polite" aria-label="Cuenta regresiva al próximo evento">
+        <span class="dash-countdown__label" id="dash-countdown-event">Semana de Acción 2026</span>
+        <div class="dash-countdown__digits">
+          <span class="dash-countdown__unit"><span class="dash-countdown__num" id="dash-cd-days">---</span><span class="dash-countdown__lbl">días</span></span>
+          <span class="dash-countdown__sep">:</span>
+          <span class="dash-countdown__unit"><span class="dash-countdown__num" id="dash-cd-hours">--</span><span class="dash-countdown__lbl">hrs</span></span>
+          <span class="dash-countdown__sep">:</span>
+          <span class="dash-countdown__unit"><span class="dash-countdown__num" id="dash-cd-mins">--</span><span class="dash-countdown__lbl">min</span></span>
+        </div>
+      </div>
+      <div class="dash-topbar__actions">
+        <span class="dash-topbar__role" id="dash-role-badge">Rol: n/d</span>
+        <button type="button" id="dash-go-map" class="btn-mpc btn-mpc--primary dash-topbar__map-btn" aria-label="Ir al mapa interactivo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          <span>Ver Mapa</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="dash-main" id="dash-main">
+
+      <!-- FILTROS GLOBALES -->
+      <section class="dash-filters" id="dash-filters" aria-label="Filtros globales del dashboard">
+        <div class="dash-filters__row">
+          <div class="dash-filter-field">
+            <label class="dash-filter-lbl" for="dash-f-ubicacion">Ubicación</label>
+            <select id="dash-f-ubicacion" class="dash-select">
+              <option value="all">Todos los estados</option>
+            </select>
+          </div>
+          <div class="dash-filter-field">
+            <label class="dash-filter-lbl" for="dash-f-sector">Sector</label>
+            <select id="dash-f-sector" class="dash-select">
+              <option value="all">Todos</option>
+              <option value="Ecosistemas Resilientes">Ecosistemas Resilientes</option>
+              <option value="Innovación Catalítica">Innovación Catalítica</option>
+              <option value="Despertar Planetario">Despertar Planetario</option>
+            </select>
+          </div>
+          <div class="dash-filter-field">
+            <label class="dash-filter-lbl" for="dash-f-stakeholder">Stakeholder</label>
+            <select id="dash-f-stakeholder" class="dash-select">
+              <option value="all">Todos</option>
+              <option value="ONG / Sociedad Civil">Sociedad civil</option>
+              <option value="Gobierno">Gobierno</option>
+              <option value="Empresa / Corporativo">Empresa</option>
+              <option value="Academia / Institución">Academia</option>
+              <option value="Emprendedor / Startup">Emprendimiento</option>
+              <option value="Fondo de Inversión">Fondo de inversión</option>
+            </select>
+          </div>
+          <div class="dash-filter-field">
+            <label class="dash-filter-lbl" for="dash-f-kpi">KPI principal</label>
+            <select id="dash-f-kpi" class="dash-select">
+              <option value="co2">CO₂ mitigado</option>
+              <option value="hectareas">Hectáreas</option>
+              <option value="financiamiento">Financiamiento</option>
+              <option value="empleos">Empleos</option>
+              <option value="agua">Agua (m³)</option>
+            </select>
+          </div>
+          <div class="dash-filter-field">
+            <label class="dash-filter-lbl" for="dash-f-clasificacion">Clasificación</label>
+            <select id="dash-f-clasificacion" class="dash-select">
+              <option value="all">Todas</option>
+              <option value="mitigacion">Mitigación</option>
+              <option value="adaptacion">Adaptación</option>
+              <option value="nbs">NbS</option>
+              <option value="hibrido">Híbrido</option>
+            </select>
+          </div>
+          <div class="dash-filter-actions">
+            <button type="button" id="dash-apply-filters" class="btn-mpc btn-mpc--primary btn-mpc--sm">Aplicar</button>
+            <button type="button" id="dash-clear-filters" class="btn-mpc btn-mpc--ghost btn-mpc--sm">Limpiar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROW 1: KPI HERO CARDS -->
+      <section class="dash-row dash-kpis" aria-label="Indicadores clave">
+        <div class="dash-kpi-card" data-kpi="financiamiento">
+          <span class="dash-kpi__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </span>
+          <span class="dash-kpi__label">Capital Movilizado</span>
+          <span class="dash-kpi__value" id="kpi-capital">$0</span>
+          <span class="dash-kpi__unit">USD</span>
+          <div class="dash-kpi__spark" id="spark-capital"></div>
+        </div>
+        <div class="dash-kpi-card" data-kpi="co2">
+          <span class="dash-kpi__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 22 16 8"/><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 010 4.94L5 19l-1.53-1.53a3.5 3.5 0 010-4.94z"/><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 010 4.94L9 15l-1.53-1.53a3.5 3.5 0 010-4.94z"/><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 010 4.94L13 11l-1.53-1.53a3.5 3.5 0 010-4.94z"/><path d="M20 2h2v2a4 4 0 01-4 4h-2V6a4 4 0 014-4z"/></svg>
+          </span>
+          <span class="dash-kpi__label">CO₂eq Mitigadas</span>
+          <span class="dash-kpi__value" id="kpi-co2">0</span>
+          <span class="dash-kpi__unit">toneladas</span>
+          <div class="dash-kpi__spark" id="spark-co2"></div>
+        </div>
+        <div class="dash-kpi-card" data-kpi="hectareas">
+          <span class="dash-kpi__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          <span class="dash-kpi__label">Hectáreas Impactadas</span>
+          <span class="dash-kpi__value" id="kpi-hectareas">0</span>
+          <span class="dash-kpi__unit">ha</span>
+          <div class="dash-kpi__spark" id="spark-hectareas"></div>
+        </div>
+        <div class="dash-kpi-card" data-kpi="empleos">
+          <span class="dash-kpi__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </span>
+          <span class="dash-kpi__label">Empleos Verdes</span>
+          <span class="dash-kpi__value" id="kpi-empleos">0</span>
+          <span class="dash-kpi__unit">directos + indirectos</span>
+          <div class="dash-kpi__spark" id="spark-empleos"></div>
+        </div>
+      </section>
+
+      <!-- ROW 2: RANKINGS PROYECTOS -->
+      <section class="dash-row dash-row--triple" aria-label="Rankings de proyectos">
+        <div class="dash-card dash-card--project-ranking">
+          <div class="dash-card__head">
+            <h3 class="dash-card__title">Top Financiamiento</h3>
+          </div>
+          <div class="dash-currency-toggle">
+            <button type="button" class="dash-toggle-btn is-active" data-currency="usd">USD</button>
+            <button type="button" class="dash-toggle-btn" data-currency="mxn">MXN</button>
+          </div>
+          <ol class="dash-ranking-list dash-ranking-list--projects" id="dash-rank-finance" role="list"></ol>
+        </div>
+        <div class="dash-card dash-card--project-ranking">
+          <div class="dash-card__head">
+            <h3 class="dash-card__title">Top Impacto Ambiental</h3>
+          </div>
+          <div class="dash-env-tabs" role="tablist" aria-label="Sub-categorías ambientales">
+            <button type="button" class="dash-tab is-active" role="tab" data-env-tab="carbono" aria-selected="true">Carbono</button>
+            <button type="button" class="dash-tab" role="tab" data-env-tab="agua" aria-selected="false">Agua</button>
+            <button type="button" class="dash-tab" role="tab" data-env-tab="biodiversidad" aria-selected="false">Biodiversidad</button>
+          </div>
+          <div class="dash-env-panel" id="dash-env-panel-carbono" role="tabpanel">
+            <div class="dash-env-metrics">
+              <div class="dash-env-metric"><span class="dash-env-metric__n" id="env-co2-outcomes">0</span><span class="dash-env-metric__l">tCO₂eq verificadas</span></div>
+              <div class="dash-env-metric"><span class="dash-env-metric__n" id="env-co2-ha">0</span><span class="dash-env-metric__l">ha bajo manejo</span></div>
+            </div>
+            <ol class="dash-ranking-list dash-ranking-list--projects" id="dash-rank-carbono" role="list"></ol>
+          </div>
+          <div class="dash-env-panel is-hidden" id="dash-env-panel-agua" role="tabpanel">
+            <div class="dash-env-metrics">
+              <div class="dash-env-metric"><span class="dash-env-metric__n" id="env-agua-m3">0</span><span class="dash-env-metric__l">m³ infiltrados/tratados</span></div>
+              <div class="dash-env-metric"><span class="dash-env-metric__n" id="env-agua-cavs">0</span><span class="dash-env-metric__l">CAVs emitidos</span></div>
+            </div>
+            <ol class="dash-ranking-list dash-ranking-list--projects" id="dash-rank-agua" role="list"></ol>
+          </div>
+          <div class="dash-env-panel is-hidden" id="dash-env-panel-biodiversidad" role="tabpanel">
+            <div class="dash-env-metrics">
+              <div class="dash-env-metric"><span class="dash-env-metric__n" id="env-bio-especies">0</span><span class="dash-env-metric__l">especies recuperadas</span></div>
+              <div class="dash-env-metric"><span class="dash-env-metric__n" id="env-bio-corredores">0</span><span class="dash-env-metric__l">corredores conectados</span></div>
+            </div>
+            <ol class="dash-ranking-list dash-ranking-list--projects" id="dash-rank-biodiversidad" role="list"></ol>
+          </div>
+        </div>
+        <div class="dash-card dash-card--project-ranking">
+          <div class="dash-card__head">
+            <h3 class="dash-card__title">Top Impacto Social</h3>
+          </div>
+          <div class="dash-social-summary" id="dash-social-summary">
+            <span class="dash-social-stat"><strong id="social-empleos-total">0</strong> empleos</span>
+            <span class="dash-social-stat"><strong id="social-comunidades-total">0</strong> comunidades</span>
+            <span class="dash-social-stat"><strong id="social-acuerdos-total">0</strong> acuerdos</span>
+          </div>
+          <ol class="dash-ranking-list dash-ranking-list--projects" id="dash-rank-social" role="list"></ol>
+        </div>
+      </section>
+
+      <!-- ROW 3: RANKINGS ACTORES + METAS -->
+      <section class="dash-row dash-row--split" aria-label="Rankings y metas">
+        <div class="dash-card dash-card--ranking-actors">
+          <div class="dash-card__head">
+            <h3 class="dash-card__title">Ranking de Actores · IAC</h3>
+            <span class="dash-card__badge" title="Índice de Acción Climática: score compuesto 0-100">?</span>
+          </div>
+          <p class="dash-card__sub">Capital movilizado 25% · Carbono 25% · Territorial 20% · Social 15% · Alianzas 10% · Transparencia 5%</p>
+          <ol class="dash-ranking-list" id="dash-actor-ranking" role="list"></ol>
+        </div>
+        <div class="dash-card dash-card--goals">
+          <div class="dash-card__head">
+            <h3 class="dash-card__title">Contribución a Metas</h3>
+          </div>
+          <p class="dash-card__sub">Avance de proyectos activos hacia metas nacionales y del MXC</p>
+          <div class="dash-goals-list" id="dash-goals" role="list"></div>
+        </div>
+      </section>
+
+      <!-- ROW 4: VISUALIZACIONES TEMPORALES -->
+      <section class="dash-row dash-row--full" aria-label="Visualizaciones temporales">
+        <div class="dash-card dash-card--timeline">
+          <div class="dash-card__head">
+            <h3 class="dash-card__title">Financiamiento Acumulado</h3>
+            <div class="dash-timeline-controls">
+              <select id="dash-timeline-group" class="dash-select dash-select--sm">
+                <option value="total">Total</option>
+                <option value="sector">Por sector</option>
+                <option value="tipo">Por tipo de desembolso</option>
+              </select>
+            </div>
+          </div>
+          <div class="dash-chart-wrap" id="dash-chart-finance" aria-label="Gráfica de financiamiento acumulado"></div>
+          <div class="dash-timeline-legend" id="dash-timeline-legend"></div>
+        </div>
+        <div class="dash-card dash-card--timeline">
+          <div class="dash-card__head">
+            <h3 class="dash-card__title">Timeline de Verificaciones</h3>
+          </div>
+          <div class="dash-chart-wrap" id="dash-chart-verif" aria-label="Línea de tiempo de verificaciones y hitos"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER SPONSORS -->
+    <footer class="sponsors-glass sponsors-glass--screen" style="position:relative;z-index:1" aria-label="Patrocinadores">
+      <p class="sponsors-glass__eyebrow">Con el apoyo de</p>
+      <div class="sponsors-glass__track">
+        <img src="assets/patrocinadores/3m.png" alt="3M" class="sponsors-glass__logo" width="80" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/marshmclennan.png" alt="Marsh McLennan" class="sponsors-glass__logo" width="120" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/banorte.png" alt="Banorte" class="sponsors-glass__logo" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/bimbo.png" alt="Bimbo" class="sponsors-glass__logo" width="90" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/heineken.png" alt="Heineken" class="sponsors-glass__logo sponsors-glass__logo--heineken" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/hsbc.png" alt="HSBC" class="sponsors-glass__logo" width="90" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/nestle.png" alt="Nestlé" class="sponsors-glass__logo" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/scotiabank.png" alt="Scotiabank" class="sponsors-glass__logo" width="100" height="28" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/tesla.png" alt="Tesla" class="sponsors-glass__logo sponsors-glass__logo--tesla" width="90" height="28" loading="lazy" decoding="async" />
+      </div>
+    </footer>
+  </div>
+
+  <!-- ==================== FAB NAVEGACIÓN DASHBOARD <-> MAPA ==================== -->
+  <button type="button" id="dash-map-fab" class="dash-map-fab is-hidden" aria-label="Alternar entre dashboard y mapa" aria-hidden="true">
+    <span class="dash-map-fab__icon dash-map-fab__icon--chart" id="fab-icon-chart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+    </span>
+    <span class="dash-map-fab__icon dash-map-fab__icon--globe is-hidden" id="fab-icon-globe">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+    </span>
+  </button>
+
+  <div id="mpc-atlas" class="relative flex-1 min-h-0 w-full is-hidden" aria-hidden="true">
+    <!-- Patrocinadores (discreto, no intercepta el mapa) -->
+    <footer class="sponsors-glass sponsors-glass--visor" aria-hidden="true">
+      <div class="sponsors-glass__track sponsors-glass__track--visor">
+        <img src="assets/patrocinadores/3m.png" alt="" class="sponsors-glass__logo" width="56" height="18" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/marshmclennan.png" alt="" class="sponsors-glass__logo" width="72" height="18" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/banorte.png" alt="" class="sponsors-glass__logo" width="64" height="18" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/bimbo.png" alt="" class="sponsors-glass__logo" width="56" height="18" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/heineken.png" alt="" class="sponsors-glass__logo sponsors-glass__logo--heineken" width="64" height="18" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/hsbc.png" alt="" class="sponsors-glass__logo" width="56" height="18" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/nestle.png" alt="" class="sponsors-glass__logo" width="64" height="18" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/scotiabank.png" alt="" class="sponsors-glass__logo" width="64" height="18" loading="lazy" decoding="async" />
+        <img src="assets/patrocinadores/tesla.png" alt="" class="sponsors-glass__logo sponsors-glass__logo--tesla" width="56" height="18" loading="lazy" decoding="async" />
+      </div>
+    </footer>
+    <!-- ==================== MAP ==================== -->
+    <div class="map-wrap absolute inset-0 z-0">
+      <div id="map" class="absolute inset-0"></div>
+      <div id="mpc-map-loading" class="mpc-map-loading" role="status" aria-live="polite" aria-busy="true">
+        <div class="mpc-map-loading__inner">
+          <img src="assets/mpc-circulo-loading.webp" alt="" class="mpc-map-loading__spin" width="96" height="96" decoding="async" />
+          <span class="sr-only">Cargando mapa y capas…</span>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" id="sidebar-fab" class="sidebar-fab" aria-label="Mostrar u ocultar panel de proyectos" aria-expanded="false">
+      <svg class="sidebar-fab__svg" width="88" height="88" viewBox="0 0 48 48" aria-hidden="true">
+        <g class="sidebar-fab__ring sidebar-fab__ring--outer">
+          <circle cx="24" cy="24" r="22" fill="#1ecf9b" />
+        </g>
+        <g class="sidebar-fab__ring sidebar-fab__ring--mid">
+          <circle cx="24" cy="24" r="16" fill="#0d9488" />
+        </g>
+        <g class="sidebar-fab__ring sidebar-fab__ring--inner">
+          <circle cx="24" cy="24" r="10" fill="#1d6ff2" />
+        </g>
+        <circle class="sidebar-fab__core" cx="24" cy="24" r="4" fill="#01080f" />
+      </svg>
+    </button>
+
+    <!-- Asistente de consulta (discreto, esquina inferior derecha) -->
+    <div id="mpc-chat-widget" class="mpc-chat-widget">
+      <button type="button" id="mpc-chat-fab" class="mpc-chat-fab" aria-label="Abrir asistente de consulta de proyectos" aria-expanded="false" aria-controls="mpc-chat-panel">
+        <span class="mpc-chat-fab__pulse" aria-hidden="true"></span>
+        <span class="mpc-chat-fab__inner">
+          <img src="assets/mpc-chat-assistant.jpg" alt="" class="mpc-chat-fab__avatar" width="52" height="52" decoding="async" />
+        </span>
+      </button>
+      <div id="mpc-chat-panel" class="mpc-chat-panel hidden" role="dialog" aria-labelledby="mpc-chat-title" aria-modal="true" aria-hidden="true">
+        <div class="mpc-chat-panel__head">
+          <div>
+            <h2 id="mpc-chat-title" class="mpc-chat-panel__title">Consulta de proyectos</h2>
+            <p class="mpc-chat-panel__subtitle">Asistente local · demo</p>
+          </div>
+          <button type="button" id="mpc-chat-close" class="mpc-chat-panel__close" aria-label="Cerrar chat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div id="mpc-chat-messages" class="mpc-chat-messages" role="log" aria-live="polite"></div>
+        <form id="mpc-chat-form" class="mpc-chat-form">
+          <label class="sr-only" for="mpc-chat-input">Tu pregunta</label>
+          <input type="text" id="mpc-chat-input" class="mpc-chat-input" placeholder="Pregunta por un proyecto, filtros o capas…" autocomplete="off" maxlength="500" />
+          <button type="submit" class="mpc-chat-send">Enviar</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==================== TOPBAR ==================== -->
+    <header id="topbar" class="topbar-glass fixed top-0 inset-x-0 z-[100] flex items-center justify-between">
+      <div class="flex items-center gap-3 shrink-0">
+        <img src="assets/LOGO-3.webp" alt="MPC" class="h-7" />
+        <div class="leading-tight">
+          <span class="font-display text-[13px] font-semibold text-white tracking-tight">México por el Clima</span>
+          <span class="block text-[9px] font-medium text-white/45 uppercase tracking-[0.1em]">Visualizar el Territorio</span>
+        </div>
+        <span class="powered-by-sep" aria-hidden="true"></span>
+        <a href="#" class="powered-by-badge" aria-label="Powered by aosenuma">
+          <span class="powered-by-badge__text">powered by</span>
+          <img src="assets/aosenuma-icon-white.png" alt="aosenuma" class="powered-by-badge__logo" />
+          <span class="powered-by-badge__name">aosenuma</span>
+        </a>
+      </div>
+      <div class="flex-1 max-w-md hidden sm:block">
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-white/25 pointer-events-none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="search-input" placeholder="Buscar proyectos, organizaciones, regiones…" class="w-full pl-9 pr-4 py-[7px] text-[12px] bg-white/[0.05] border border-white/[0.1] rounded-full text-white/85 placeholder:text-white/25 outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors" />
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <select id="basemap-select" class="apple-select text-[11px]">
+          <option value="dark">Oscuro</option>
+          <option value="satellite-streets">Satélite</option>
+          <option value="satellite" selected>Satélite puro</option>
+          <option value="streets">Calles</option>
+          <option value="light">Claro</option>
+          <option value="outdoors">Exteriores</option>
+        </select>
+        <button type="button" class="topbar-account-btn w-8 h-8 flex items-center justify-center rounded-full bg-white/[0.12] border border-white/[0.12] text-white/85" title="Crear cuenta">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==================== SIDEBAR (explorador de proyectos) ==================== -->
+    <aside id="sidebar" class="sidebar-panel sidebar-panel--explorer is-desktop-collapsed">
+
+      <section class="explorer-hero">
+        <p class="explorer-eyebrow">México por el Clima · Atlas</p>
+        <p class="explorer-role-line" id="explorer-role-line" aria-live="polite"><span class="explorer-role-line__k">Tu rol:</span> <span id="explorer-role-label">n/d</span></p>
+        <p class="explorer-purpose" id="explorer-purpose">Explora el <strong>panorama</strong> del ecosistema, <strong>filtra</strong> por sector y necesidad y abre fichas para entender <strong>tracción e impacto</strong> antes de dar el siguiente paso.</p>
+        <div class="explorer-pillars" role="list">
+          <button type="button" class="pillar-tile" data-pillar="financiamiento" aria-label="Filtrar oportunidades de financiamiento en tu vista">
+            <span class="pillar-tile__label">Financiamiento</span>
+            <span class="pillar-tile__hint">Oportunidades donde buscan capital</span>
+            <span class="pillar-tile__metric"><span id="pillar-count-fin">n/d</span><span class="pillar-tile__unit"> en vista</span></span>
+          </button>
+          <button type="button" class="pillar-tile" data-pillar="traccion" aria-label="Ver impacto agregado y distribución por sector">
+            <span class="pillar-tile__label">Tracción</span>
+            <span class="pillar-tile__hint">Impacto CO₂ declarado (suma)</span>
+            <span class="pillar-tile__metric"><span id="pillar-metric-co2">n/d</span><span class="pillar-tile__unit"> t CO₂</span></span>
+          </button>
+          <button type="button" class="pillar-tile" data-pillar="networking" aria-label="Filtrar proyectos que buscan aliados">
+            <span class="pillar-tile__label">Networking</span>
+            <span class="pillar-tile__hint">Quién busca vínculos u operación conjunta</span>
+            <span class="pillar-tile__metric"><span id="pillar-count-net">n/d</span><span class="pillar-tile__unit"> en vista</span></span>
+            <span class="pillar-tile__sub" id="pillar-hint-vol" aria-hidden="true"></span>
+          </button>
+        </div>
+        <h2 class="explorer-title">Proyectos climáticos</h2>
+        <p class="explorer-lead">Acota con los filtros y (si aplica) tu territorio de operación; los pilares resumen <em>qué puedes hacer ya</em> con lo visible.</p>
+        <div id="explorer-territory-block" class="explorer-territory hidden" aria-hidden="true">
+          <h3 class="explorer-h3 explorer-h3--inline">Tu territorio de operación</h3>
+          <p class="explorer-muted">Marca los estados donde tienes operación o interés de inversión; el mapa prioriza proyectos ahí.</p>
+          <div id="operating-states-list" class="operating-states-list" role="group" aria-label="Estados de operación"></div>
+          <button type="button" id="operating-states-clear" class="btn-mpc btn-mpc--ghost btn-mpc--tiny">Quitar filtro territorial</button>
+        </div>
+        <p class="explorer-count" id="explorer-match-line">
+          <span id="explorer-visible-count" class="explorer-count-num">30</span>
+          <span class="explorer-count-lbl">Coincidencias en tu vista (filtros + territorio)</span>
+        </p>
+        <div class="explorer-hero-actions">
+          <button type="button" id="focus-map-search" class="btn-mpc btn-mpc--cta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            <span>Buscar en el mapa</span>
+          </button>
+          <button type="button" id="open-register-project" class="btn-mpc btn-mpc--secondary btn-mpc--cta">Registrar proyecto (demo)</button>
+        </div>
+      </section>
+
+      <section class="explorer-block" id="explorer-sector-anchor">
+        <h3 class="explorer-h3">Distribución por sector</h3>
+        <p class="explorer-muted explorer-muted--tight">Proporción de proyectos visibles según los filtros (líneas de acción MPC).</p>
+        <div class="explorer-sector-layout">
+          <div class="sector-strip" aria-hidden="true">
+            <span class="sector-strip__seg sector-strip__seg--1"></span>
+            <span class="sector-strip__seg sector-strip__seg--2"></span>
+            <span class="sector-strip__seg sector-strip__seg--3"></span>
+          </div>
+          <div id="sector-distribution" class="sector-bars" role="list"></div>
+        </div>
+      </section>
+
+      <section class="explorer-block explorer-block--filters">
+        <h3 class="explorer-h3">Refinar búsqueda</h3>
+        <div class="mpc-field">
+          <label class="mpc-field-lbl" for="filter-sector">Sector (línea de acción)</label>
+          <select id="filter-sector" class="mpc-select">
+            <option value="all">Todos los sectores</option>
+            <option value="Ecosistemas Resilientes">Ecosistemas Resilientes</option>
+            <option value="Innovación Catalítica">Innovación Catalítica</option>
+            <option value="Despertar Planetario">Despertar Planetario</option>
+          </select>
+        </div>
+        <div class="mpc-field">
+          <label class="mpc-field-lbl" for="filter-tipo-org">Tipo de organización</label>
+          <select id="filter-tipo-org" class="mpc-select">
+            <option value="all">Todas</option>
+            <option value="ONG / Sociedad Civil">ONG / Sociedad Civil</option>
+            <option value="Gobierno">Gobierno</option>
+            <option value="Empresa / Corporativo">Empresa / Corporativo</option>
+            <option value="Academia / Institución">Academia / Institución</option>
+            <option value="Emprendedor / Startup">Emprendedor / Startup</option>
+            <option value="Fondo de Inversión">Fondo de Inversión</option>
+          </select>
+        </div>
+        <div class="mpc-field">
+          <label class="mpc-field-lbl" for="filter-necesidad">Necesidad declarada</label>
+          <select id="filter-necesidad" class="mpc-select">
+            <option value="all">Todas</option>
+            <option value="Financiamiento">Financiamiento</option>
+            <option value="Aliados">Aliados</option>
+            <option value="Voluntarios">Voluntarios</option>
+            <option value="Tecnología">Tecnología</option>
+          </select>
+        </div>
+        <div class="explorer-filter-actions">
+          <button type="button" id="apply-filters" class="btn-mpc btn-mpc--primary">Aplicar filtros</button>
+          <button type="button" id="clear-filters" class="btn-mpc btn-mpc--ghost">Restablecer</button>
+        </div>
+      </section>
+
+      <section class="explorer-block explorer-block--layers">
+        <h3 class="explorer-h3">Capas en el mapa</h3>
+        <p class="explorer-muted">Superpone proyectos, ambiental, riesgo y territorio.</p>
+        <div class="layers-panel-stack" role="region" aria-label="Capas del mapa">
+          <div class="layer-group" id="predio-demo-layer-group">
+            <div class="cat-header is-open" data-category="cat-predio-demo" role="button" tabindex="0">
+              <span class="cat-header-inner">
+                <svg class="cat-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="cat-title">Predio demo (AOSENUMA)</span>
+              </span>
+            </div>
+            <div class="cat-content is-open" id="cat-predio-demo">
+              <button type="button" id="predio-demo-focus-btn" class="btn-mpc btn-mpc--secondary w-full mt-2 mb-2">
+                Acercar al predio · solo límite
+              </button>
+              <div id="predio-demo-controls" class="layer-list"></div>
+            </div>
+          </div>
+          <div class="layer-group">
+            <div class="cat-header is-open" data-category="cat-proyectos" role="button" tabindex="0">
+              <span class="cat-header-inner">
+                <svg class="cat-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="cat-title">Proyectos</span>
+              </span>
+            </div>
+            <div class="cat-content is-open" id="cat-proyectos">
+              <div id="proyectos-controls" class="layer-list"></div>
+            </div>
+          </div>
+          <div class="layer-group">
+            <div class="cat-header" data-category="cat-ambiental" role="button" tabindex="0">
+              <span class="cat-header-inner">
+                <svg class="cat-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="cat-title">Ambiental</span>
+              </span>
+            </div>
+            <div class="cat-content" id="cat-ambiental">
+              <div id="ambiental-controls" class="layer-list"></div>
+            </div>
+          </div>
+          <div class="layer-group">
+            <div class="cat-header" data-category="cat-vulnerabilidad" role="button" tabindex="0">
+              <span class="cat-header-inner">
+                <svg class="cat-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="cat-title">Vulnerabilidad</span>
+              </span>
+            </div>
+            <div class="cat-content" id="cat-vulnerabilidad">
+              <div id="vulnerabilidad-controls" class="layer-list"></div>
+            </div>
+          </div>
+          <div class="layer-group">
+            <div class="cat-header" data-category="cat-territorial" role="button" tabindex="0">
+              <span class="cat-header-inner">
+                <svg class="cat-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="cat-title">Territorio</span>
+              </span>
+            </div>
+            <div class="cat-content" id="cat-territorial">
+              <div id="territorial-controls" class="layer-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="sidebar-visual-card">
+        <h3 class="visual-card-title">Leyenda</h3>
+        <div id="dynamic-legend" class="legend-block">
+          <ul class="legend-list">
+            <li><span class="legend-dot legend-dot--1"></span><span class="legend-label">Ecosistemas Resilientes</span></li>
+            <li><span class="legend-dot legend-dot--2"></span><span class="legend-label">Innovación Catalítica</span></li>
+            <li><span class="legend-dot legend-dot--3"></span><span class="legend-label">Despertar Planetario</span></li>
+          </ul>
+        </div>
+        <div class="visual-divider"></div>
+        <div class="visual-row">
+          <span class="visual-label">Opacidad</span>
+          <span id="opacity-value" class="visual-value">80%</span>
+        </div>
+        <input id="opacity-range" type="range" min="0" max="100" step="5" value="80" class="apple-range apple-range--wide w-full mt-2" />
+        <div class="visual-divider"></div>
+        <div class="visual-row">
+          <span class="visual-label">Relieve 3D</span>
+          <span id="z-value" class="visual-value">1.2×</span>
+        </div>
+        <input id="z-range" type="range" min="0" max="5" step="0.1" value="1.2" class="apple-range apple-range--wide w-full mt-2" />
+        <div class="relieve-actions">
+          <button type="button" id="z-dec" class="btn-mpc btn-mpc--relieve" aria-label="Menos relieve">−</button>
+          <button type="button" id="z-reset" class="btn-mpc btn-mpc--relieve">Reset</button>
+          <button type="button" id="z-inc" class="btn-mpc btn-mpc--relieve" aria-label="Más relieve">+</button>
+        </div>
+        <button type="button" id="camera-reset" class="btn-mpc btn-mpc--map-tool">Vista inicial del mapa</button>
+      </div>
+
+    </aside>
+
+    <!-- ==================== DETAIL PANEL ==================== -->
+    <div id="detail-panel" class="detail-card hidden" data-project-id="" data-detail-kind="mpc">
+      <div class="flex items-center justify-between px-5 pt-4 pb-3">
+        <span class="sector-pill" id="detail-sector-badge">Ecosistemas Resilientes</span>
+        <button type="button" id="close-detail" class="close-btn" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="px-5 pb-5">
+        <p class="text-[9px] text-white/32 mb-2 tracking-wide uppercase" id="detail-source-tag" aria-hidden="true"></p>
+        <h3 class="panel-title mb-1" id="detail-title">n/d</h3>
+        <p class="text-[12px] text-white/45 mb-2" id="detail-org">n/d</p>
+        <p class="text-[11px] text-white/40 leading-relaxed mb-3" id="detail-desc">n/d</p>
+
+        <div id="detail-gallery" class="detail-gallery hidden"></div>
+
+        <div class="grid grid-cols-3 gap-2 mb-4" id="detail-metrics-grid">
+          <div class="metric-cell">
+            <span class="metric-num" id="detail-hectareas">n/d</span>
+            <span class="metric-unit" id="detail-unit-m1">hectáreas</span>
+          </div>
+          <div class="metric-cell">
+            <span class="metric-num" id="detail-co2">n/d</span>
+            <span class="metric-unit" id="detail-unit-m2">ton CO₂</span>
+          </div>
+          <div class="metric-cell">
+            <span class="metric-num" id="detail-beneficiarios">n/d</span>
+            <span class="metric-unit" id="detail-unit-m3">beneficiarios</span>
+          </div>
+        </div>
+
+        <div id="detail-kv-mpc" class="space-y-0 mb-4">
+          <div class="detail-row"><span class="detail-key">Estado</span><span class="detail-val" id="detail-estado">n/d</span></div>
+          <div class="detail-row"><span class="detail-key">Municipio</span><span class="detail-val" id="detail-municipio">n/d</span></div>
+          <div class="detail-row"><span class="detail-key">Organización</span><span class="detail-val" id="detail-tipo-org">n/d</span></div>
+          <div class="detail-row"><span class="detail-key">Subsector</span><span class="detail-val" id="detail-subsector">n/d</span></div>
+          <div class="detail-row"><span class="detail-key">Inicio</span><span class="detail-val" id="detail-year">n/d</span></div>
+          <div class="detail-row border-none"><span class="detail-key">Estado</span><span class="detail-val" id="detail-status">n/d</span></div>
+        </div>
+
+        <div id="detail-kv-carbon" class="space-y-0 mb-4 hidden" aria-label="Detalle proyecto carbono"></div>
+
+        <div id="detail-kv-predio" class="space-y-0 mb-4 hidden" aria-label="Detalle predio demo">
+          <div class="detail-row"><span class="detail-key">Titular</span><span class="detail-val" id="detail-predio-titular">Minería Autlán</span></div>
+          <div class="detail-row"><span class="detail-key">Tema</span><span class="detail-val" id="detail-predio-tema"></span></div>
+          <div class="detail-row"><span class="detail-key">Superficie (aprox.)</span><span class="detail-val" id="detail-predio-area">n/d</span></div>
+          <div class="detail-row border-none"><span class="detail-key">Fuente límite</span><span class="detail-val" id="detail-predio-source">n/d</span></div>
+        </div>
+
+        <div class="mb-4" id="detail-need-wrap">
+          <span class="need-pill" id="detail-need">Busca financiamiento</span>
+        </div>
+
+        <p class="text-[9px] text-white/28 mb-3 leading-relaxed" id="detail-demo-legal">Demo: manifestar interés solo guarda datos en este navegador; no es compromiso legal ni fiscal.</p>
+        <div id="detail-intent-banner" class="detail-intent-banner hidden" role="status"></div>
+        <div id="detail-cta-mpc" class="space-y-2">
+          <button type="button" id="detail-primary-cta" class="btn-mpc btn-mpc--primary btn-mpc--block">Conectar (demo)</button>
+          <button type="button" class="btn-mpc btn-mpc--secondary btn-mpc--block" id="detail-m2-btn">Ver red de vínculos (demo)</button>
+        </div>
+        <div id="detail-cta-carbon" class="hidden space-y-2">
+          <a id="detail-carbon-registry-link" href="#" class="btn-mpc btn-mpc--primary btn-mpc--block text-center" target="_blank" rel="noopener noreferrer">Abrir registro público (CAR/VCS)</a>
+          <button type="button" class="btn-mpc btn-mpc--secondary btn-mpc--block" id="detail-m2-btn-carbon">Ver conexiones (M2)</button>
+        </div>
+        <div id="detail-cta-predio" class="mb-4 hidden">
+          <p class="text-[10px] text-white/50 leading-relaxed">Activá idoneidad (D1/D2), recarga y deforestación en «Predio demo (AOSENUMA)» en el panel de capas.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== RED DE VÍNCULOS (MPC, DEMO) ==================== -->
+    <div id="mpc-network-modal" class="mpc-network-modal hidden" aria-hidden="true">
+      <div class="mpc-network-modal__backdrop" id="mpc-network-backdrop"></div>
+      <div
+        class="mpc-network-modal__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="mpc-network-title"
+        aria-describedby="mpc-network-desc"
+      >
+        <div class="mpc-network-modal__head">
+          <div>
+            <h3 id="mpc-network-title" class="mpc-network-modal__title">Red de vínculos</h3>
+            <p id="mpc-network-meta" class="mpc-network-modal__meta" aria-live="polite"></p>
+          </div>
+          <button type="button" id="mpc-network-close" class="close-btn" aria-label="Cerrar red de vínculos">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <div class="mpc-network-body">
+          <!-- GRAFO -->
+          <div class="mpc-network-body__graph-col">
+            <div id="mpc-network-graph" class="mpc-network-graph"></div>
+            <div id="mpc-network-legend" class="mpc-network-legend" aria-label="Leyenda de categorías de vínculo"></div>
+          </div>
+
+          <!-- DASHBOARD -->
+          <aside class="mpc-network-body__dash" id="mpc-network-dash">
+            <section class="net-dash__section">
+              <h4 class="net-dash__heading">¿Qué es esta red?</h4>
+              <p class="net-dash__text" id="mpc-network-desc">Los <b style="color:rgba(255,255,255,0.8)">círculos</b> son proyectos con ubicación en el mapa. Los <b style="color:rgba(255,255,255,0.8)">◆ diamantes</b> son actores o factores que los conectan (fondos, consultoras, programas, redes) — no tienen ubicación geográfica propia, pero son la razón por la que dos proyectos se relacionan.</p>
+              <p class="net-dash__text net-dash__text--dim" id="mpc-network-classification"></p>
+            </section>
+
+            <section class="net-dash__section" id="net-dash-focus">
+              <h4 class="net-dash__heading">Proyecto seleccionado</h4>
+              <div id="net-dash-focus-body"></div>
+            </section>
+
+            <section class="net-dash__section" id="net-dash-links">
+              <h4 class="net-dash__heading">Conexiones</h4>
+              <div id="net-dash-links-body" class="net-dash__links-list"></div>
+            </section>
+
+            <p class="net-dash__fine">Demo ilustrativa · En producción los vínculos provienen del API / Módulo 2.</p>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== REGISTRAR PROYECTO (MODAL DEMO) ==================== -->
+    <div id="register-project-modal" class="register-modal hidden" aria-hidden="true">
+      <div class="register-modal__backdrop" id="register-project-backdrop"></div>
+      <div class="register-modal__card" role="dialog" aria-labelledby="register-project-title" aria-modal="true">
+        <div class="register-modal__head">
+          <h3 id="register-project-title" class="register-modal__title">Registrar proyecto (demo)</h3>
+          <button type="button" id="register-project-close" class="close-btn" aria-label="Cerrar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <p class="register-modal__lede">Borrador local. Próximamente envío al servidor, KMZ en pipeline y validación legal.</p>
+        <form id="register-project-form" class="register-modal__form">
+          <div class="mpc-field">
+            <label class="mpc-field-lbl" for="reg-nombre">Nombre del proyecto</label>
+            <input id="reg-nombre" name="nombre" type="text" class="mpc-input" required maxlength="200" placeholder="Ej. Restauración comunitaria X" />
+          </div>
+          <div class="mpc-field">
+            <label class="mpc-field-lbl" for="reg-org">Organización</label>
+            <input id="reg-org" name="organizacion" type="text" class="mpc-input" required maxlength="200" />
+          </div>
+          <div class="mpc-field">
+            <label class="mpc-field-lbl" for="reg-sector">Línea de acción (sector)</label>
+            <select id="reg-sector" name="sector" class="mpc-select">
+              <option value="Ecosistemas Resilientes">Ecosistemas Resilientes</option>
+              <option value="Innovación Catalítica">Innovación Catalítica</option>
+              <option value="Despertar Planetario">Despertar Planetario</option>
+            </select>
+          </div>
+          <div class="mpc-field">
+            <label class="mpc-field-lbl" for="reg-necesidad">Necesidad declarada</label>
+            <select id="reg-necesidad" name="necesidad" class="mpc-select">
+              <option value="Financiamiento">Financiamiento</option>
+              <option value="Aliados">Aliados</option>
+              <option value="Voluntarios">Voluntarios</option>
+              <option value="Tecnología">Tecnología</option>
+            </select>
+          </div>
+          <div class="mpc-field">
+            <label class="mpc-field-lbl" for="reg-kml">Geometría KML o KMZ</label>
+            <input id="reg-kml" name="geom_file" type="file" accept=".kml,.kmz,application/vnd.google-earth.kml+xml,application/vnd.google-earth.kmz" class="mpc-file" />
+            <p id="register-kml-status" class="register-kml-status" role="status"></p>
+          </div>
+          <button type="submit" class="btn-mpc btn-mpc--primary btn-mpc--block">Guardar borrador local</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==================== ZONA PANEL ==================== -->
+    <div id="zona-panel" class="detail-card hidden">
+      <div class="flex items-center justify-between px-5 pt-4 pb-3">
+        <span class="sector-pill sector-zona">Zona Desatendida</span>
+        <button type="button" id="close-zona" class="close-btn" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="px-5 pb-5">
+        <h3 class="panel-title mb-1" id="zona-title">n/d</h3>
+        <p class="text-[11px] text-white/35 leading-relaxed mb-4" id="zona-desc">Alta vulnerabilidad climática y baja cobertura de proyectos.</p>
+
+        <div class="grid grid-cols-3 gap-2 mb-4">
+          <div class="metric-cell"><span class="metric-num" id="zona-score">n/d</span><span class="metric-unit">score</span></div>
+          <div class="metric-cell"><span class="metric-num" id="zona-riesgo">n/d</span><span class="metric-unit">riesgo</span></div>
+          <div class="metric-cell"><span class="metric-num" id="zona-poblacion">n/d</span><span class="metric-unit">población</span></div>
+        </div>
+
+        <div class="space-y-0 mb-4">
+          <div class="detail-row"><span class="detail-key">Proyectos activos</span><span class="detail-val" id="zona-proyectos">n/d</span></div>
+          <div class="detail-row border-none"><span class="detail-key">Área</span><span class="detail-val" id="zona-area">n/d</span></div>
+        </div>
+
+        <button type="button" class="btn-mpc btn-mpc--primary btn-mpc--block">Registrar proyecto aquí</button>
+      </div>
+    </div>
+
+    <!-- ==================== PROYECTOS DESTACADOS (carousel) ==================== -->
+    <div id="pcard-bar" class="pcard-bar hidden" aria-label="Proyectos destacados">
+      <div class="pcard-bar__header">
+        <div class="pcard-bar__header-left">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <h2 class="pcard-bar__title">Proyectos Destacados</h2>
+          <span class="pcard-bar__count" id="pcard-count"></span>
+        </div>
+        <div class="pcard-bar__header-right">
+          <button type="button" id="pcard-arrow-left" class="pcard-bar__arrow" aria-label="Anterior">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button type="button" id="pcard-arrow-right" class="pcard-bar__arrow" aria-label="Siguiente">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button type="button" id="pcard-close" class="close-btn" aria-label="Cerrar">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="pcard-bar__track" id="pcard-track"></div>
+    </div>
+
+    <!-- FAB: toggle carousel -->
+    <button type="button" id="deck-fab" class="deck-fab" aria-label="Proyectos destacados">
+      <span class="deck-fab__pulse" aria-hidden="true"></span>
+      <span class="deck-fab__inner">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+      </span>
+    </button>
+
+    <!-- ==================== CONNECTION PANEL (ficha + indicadores) ==================== -->
+    <div id="conn-panel" class="conn-panel hidden" aria-hidden="true">
+      <div class="conn-panel__backdrop" id="conn-backdrop"></div>
+      <div class="conn-panel__sheet" role="dialog" aria-modal="true" aria-labelledby="conn-name">
+        <button type="button" id="conn-close" class="close-btn conn-panel__close" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+
+        <!-- Header -->
+        <div class="conn__header">
+          <span class="conn__sector-pill" id="conn-sector">Ecosistemas Resilientes</span>
+          <h2 class="conn__name" id="conn-name">Proyecto</h2>
+          <p class="conn__org" id="conn-org">Organización</p>
+        </div>
+
+        <!-- Location + need -->
+        <div class="conn__meta">
+          <span class="conn__meta-item">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span id="conn-loc">México</span>
+          </span>
+          <span class="conn__meta-item">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Busca: <strong class="conn__need" id="conn-need">Financiamiento</strong>
+          </span>
+        </div>
+
+        <!-- Description -->
+        <p class="conn__desc" id="conn-desc"></p>
+
+        <!-- Indicators table -->
+        <div class="conn__section">
+          <h3 class="conn__section-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            Tabla de indicadores
+          </h3>
+          <div id="conn-indicators-wrap"></div>
+        </div>
+
+        <!-- CTAs -->
+        <div class="conn__ctas">
+          <button type="button" id="conn-cta-connect" class="btn-mpc btn-mpc--primary btn-mpc--block conn__cta conn__cta--connect">Conectar</button>
+          <button type="button" id="conn-cta-docs" class="btn-mpc btn-mpc--secondary btn-mpc--block conn__cta">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Solicitar documentación técnica
+          </button>
+          <button type="button" id="conn-cta-map" class="btn-mpc btn-mpc--ghost btn-mpc--block conn__cta">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+            Ver en mapa
+          </button>
+        </div>
+
+        <p class="conn__legal">Demo: la conexión se registra localmente. En producción se genera notificación al operador del proyecto.</p>
+      </div>
+    </div>
+
+    <!-- ==================== ALERT ==================== -->
+    <div id="alert-overlay" class="alert-overlay-pos fixed right-3 z-[80] transition-all duration-300 hidden">
+      <div class="alert-glass flex items-start gap-3 px-4 py-3 max-w-xs">
+        <div class="w-5 h-5 rounded-full bg-white/[0.08] border border-white/[0.1] flex items-center justify-center shrink-0 mt-0.5">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2.5"><path d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div>
+          <p class="font-display text-[11px] font-semibold text-white/85" id="alert-title">Zona crítica detectada</p>
+          <p class="text-[10px] text-white/45 mt-0.5 leading-relaxed" id="alert-body">Hay municipios con alta vulnerabilidad.</p>
+        </div>
+        <button type="button" id="alert-dismiss" class="close-btn shrink-0 ml-auto" aria-label="Cerrar alerta">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="vendor/force-graph.min.js"></script>
+  <script src="config.local.js"></script>
+  <script src="dashboard.js"></script>
+  <script src="app.js"></script>
+  <script src="swipe-deck.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor
+.cursor/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.env
+
+# Local env
+.env.local
+.env.*.local
+
+# Tokens / configuración local (no subir al repo)
+config.local.js
+
+# Node (por si se agrega build más adelante)
+node_modules/
