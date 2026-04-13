@@ -37,3 +37,4 @@ config.local.js
 
 # Node (por si se agrega build más adelante)
 node_modules/
+node_modules/
